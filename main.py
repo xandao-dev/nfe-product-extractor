@@ -86,9 +86,9 @@ def iterateOverXml(rootET):
                 indTot.append(indTotITER.text)
     return nItems
 
-
 def generateOutputFileFirstMode(outputFile, nItems):
     # I|cProd|xProd|cEAN|NCM|||uCom|vUnCom||uCom(uTrib)|vUnCom(vUnTrib)|1.000|
+
     outputFile.write(fixedTextA + str(nItems) + '\n')
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB)
@@ -100,21 +100,36 @@ def generateOutputFileFirstMode(outputFile, nItems):
 
 
 def generateOutputFileSecondMode(outputFile, nItems):
-    # I|cProd|cEAN|xProd|NCM|cBenef|EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|
-    # uTrib|qTrib|vUnTrib|vFrete|vSeg|vDesc|vOutro|indTot|xPed|nItemPed|nFCI|
+    # I|cProd|cEAN|xProd|NCM|*cBenef|*EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|
+    # uTrib|qTrib|vUnTrib|*vFrete|*vSeg|*vDesc|*vOutro|indTot|*xPed|*nItemPed|*nFCI|
+
     outputFile.write(fixedTextA + str(nItems) + '\n')
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB)
-        outputFile.write(fixedTextC + '|' +
-                         str(cProd[nItem]) + '|' + str(xProd[nItem]) + '\n')
+        outputFile.write(fixedTextC + '|' + str(cProd[nItem]) +
+                         '|' + str(cEAN[nItem]) + '|' + str(xProd[nItem]) +
+                         '|' + str(NCM[nItem]) + '|||' + str(CFOP[nItem]) +
+                         '|' + str(uCom[nItem]) + '|' + str(qCom[nItem]) +
+                         '|' + str(vUnCom[nItem]) + '|' + str(vProd[nItem]) +
+                         '|' + str(cEANTrib[nItem]) + '|' + str(uTrib[nItem]) +
+                         '|' + str(qTrib[nItem]) + '|' + str(vUnTrib[nItem]) +
+                         '|||||' + str(indTot[nItem]) + '||||' + '\n')
 
 
 def generateOutputFileThirdMode(outputFile, nItems):
+    #Mude como quiser
+
     outputFile.write(fixedTextA + str(nItems) + '\n')
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB)
-        outputFile.write(fixedTextC + '|' +
-                         str(cProd[nItem]) + '|' + str(xProd[nItem]) + '\n')
+        outputFile.write(fixedTextC + '|' + str(cProd[nItem]) +
+                         '|' + str(cEAN[nItem]) + '|' + str(xProd[nItem]) +
+                         '|' + str(NCM[nItem]) + '|||' + str(CFOP[nItem]) +
+                         '|' + str(uCom[nItem]) + '|' + str(qCom[nItem]) +
+                         '|' + str(vUnCom[nItem]) + '|' + str(vProd[nItem]) +
+                         '|' + str(cEANTrib[nItem]) + '|' + str(uTrib[nItem]) +
+                         '|' + str(qTrib[nItem]) + '|' + str(vUnTrib[nItem]) +
+                         '|||||' + str(indTot[nItem]) + '||||' + '\n')
 
 def printProducts(nItems):
     i = 0
