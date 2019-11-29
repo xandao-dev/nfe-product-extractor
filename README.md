@@ -16,10 +16,12 @@ python3.7 -m pip install -r requirements.txt
 
 ## Usage
 
-1) Insira uma nota fical eletrônica de produto 4.0 (NF-e 4.0) no formato .XML 
-2) Será produzido um arquivo chamado "Products.txt"
-3) 
-4) 
+1. Insira uma **nota fical eletrônica de produto 4.0 (NF-e 4.0)** no formato **.XML**. Será produzido um arquivo chamado **"Products.txt"**
+2. Abra o **Emissor de NF-e gratuito do Sebrae** e selecione a empresa.
+1. Agora vá em **Sistema** e depois em **Importar Arquivos**, como na imagem a seguir.![](https://raw.githubusercontent.com/xandao6/NFeProductExtractor/master/imagesTutorial/img1.jpg?token=AFIVBVTFEFDUXZ66PFI6LM254BPIU)
+1. Selecione no emissor o nosso arquivo **"Products.txt"**
+1. Clique em importar
+1. Pronto, os produtos foram importados! :clap::clap::clap:
 
 ## Contributing
 
