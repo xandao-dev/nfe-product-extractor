@@ -3,8 +3,12 @@ import xml.etree.ElementTree as ET
 from tkinter import filedialog
 
 nItems = 0
+separator = '|'
+separator2x = '||'
+separator3x = '|||'
+lineBreak = '\n'
 fixedTextA = 'PRODUTO|'
-fixedTextB = 'A|1.02\n'
+fixedTextB = 'A|1.02'
 fixedTextC = 'I'
 cProd = []
 xProd = []
@@ -29,7 +33,7 @@ def main():
     rootTK.withdraw()
     print('Escolha a nota fiscal (XML) do seu fornecedor: ')
     file_path = filedialog.askopenfilename()
-    
+
     output_file_path = 'Products.txt'
     outputFile = open(output_file_path, 'w')
 
@@ -44,7 +48,6 @@ def main():
     printProducts(nItems)
 
     outputFile.close()
-    
 
 
 def iterateOverXml(rootET):
@@ -86,50 +89,54 @@ def iterateOverXml(rootET):
                 indTot.append(indTotITER.text)
     return nItems
 
+
 def generateOutputFileFirstMode(outputFile, nItems):
     # I|cProd|xProd|cEAN|NCM|||uCom|vUnCom||uCom(uTrib)|vUnCom(vUnTrib)|1.000|
 
-    outputFile.write(fixedTextA + str(nItems) + '\n')
+    outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
-        outputFile.write(fixedTextB)
-        outputFile.write(fixedTextC + '|' + str(cProd[nItem]) +
-                         '|' + str(xProd[nItem]) + '|' + str(cEAN[nItem]) +
-                         '|' + str(NCM[nItem]) + '|||' + str(uCom[nItem]) +
-                         '|' + str(vUnCom[nItem]) + '||' + str(uCom[nItem]) +
-                         '|' + str(vUnCom[nItem]) + '|' + '1.000' + '|' + '\n')
+        outputFile.write(fixedTextB + lineBreak)
+        outputFile.write(fixedTextC + separator + str(cProd[nItem]) +
+                         separator + str(xProd[nItem]) + separator + str(cEAN[nItem]) +
+                         separator + str(NCM[nItem]) + separator3x + str(uCom[nItem]) +
+                         separator + str(vUnCom[nItem]) + separator2x + str(uCom[nItem]) +
+                         separator + str(vUnCom[nItem]) + separator + '1.000' + separator + lineBreak)
 
 
 def generateOutputFileSecondMode(outputFile, nItems):
     # I|cProd|cEAN|xProd|NCM|*cBenef|*EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|
     # uTrib|qTrib|vUnTrib|*vFrete|*vSeg|*vDesc|*vOutro|indTot|*xPed|*nItemPed|*nFCI|
 
-    outputFile.write(fixedTextA + str(nItems) + '\n')
+    outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
-        outputFile.write(fixedTextB)
-        outputFile.write(fixedTextC + '|' + str(cProd[nItem]) +
-                         '|' + str(cEAN[nItem]) + '|' + str(xProd[nItem]) +
-                         '|' + str(NCM[nItem]) + '|||' + str(CFOP[nItem]) +
-                         '|' + str(uCom[nItem]) + '|' + str(qCom[nItem]) +
-                         '|' + str(vUnCom[nItem]) + '|' + str(vProd[nItem]) +
-                         '|' + str(cEANTrib[nItem]) + '|' + str(uTrib[nItem]) +
-                         '|' + str(qTrib[nItem]) + '|' + str(vUnTrib[nItem]) +
-                         '|||||' + str(indTot[nItem]) + '||||' + '\n')
+        outputFile.write(fixedTextB + lineBreak)
+        outputFile.write(fixedTextC + separator + str(cProd[nItem]) +
+                         separator + str(cEAN[nItem]) + separator + str(xProd[nItem]) +
+                         separator + str(NCM[nItem]) + separator3x + str(CFOP[nItem]) +
+                         separator + str(uCom[nItem]) + separator + str(qCom[nItem]) +
+                         separator + str(vUnCom[nItem]) + separator + str(vProd[nItem]) +
+                         separator + str(cEANTrib[nItem]) + separator + str(uTrib[nItem]) +
+                         separator + str(qTrib[nItem]) + separator + str(vUnTrib[nItem]) +
+                         separator3x + separator2x + str(indTot[nItem]) + separator3x + 
+                         separator + lineBreak)
 
 
 def generateOutputFileThirdMode(outputFile, nItems):
-    #Mude como quiser
+    # Mude como quiser
 
-    outputFile.write(fixedTextA + str(nItems) + '\n')
+    outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
-        outputFile.write(fixedTextB)
-        outputFile.write(fixedTextC + '|' + str(cProd[nItem]) +
-                         '|' + str(cEAN[nItem]) + '|' + str(xProd[nItem]) +
-                         '|' + str(NCM[nItem]) + '|||' + str(CFOP[nItem]) +
-                         '|' + str(uCom[nItem]) + '|' + str(qCom[nItem]) +
-                         '|' + str(vUnCom[nItem]) + '|' + str(vProd[nItem]) +
-                         '|' + str(cEANTrib[nItem]) + '|' + str(uTrib[nItem]) +
-                         '|' + str(qTrib[nItem]) + '|' + str(vUnTrib[nItem]) +
-                         '|||||' + str(indTot[nItem]) + '||||' + '\n')
+        outputFile.write(fixedTextB + lineBreak)
+        outputFile.write(fixedTextC + separator + str(cProd[nItem]) +
+                         separator + str(cEAN[nItem]) + separator + str(xProd[nItem]) +
+                         separator + str(NCM[nItem]) + separator3x + str(CFOP[nItem]) +
+                         separator + str(uCom[nItem]) + separator + str(qCom[nItem]) +
+                         separator + str(vUnCom[nItem]) + separator + str(vProd[nItem]) +
+                         separator + str(cEANTrib[nItem]) + separator + str(uTrib[nItem]) +
+                         separator + str(qTrib[nItem]) + separator + str(vUnTrib[nItem]) +
+                         separator3x + separator2x + str(indTot[nItem]) + separator3x + 
+                         separator + lineBreak)
+
 
 def printProducts(nItems):
     i = 0
@@ -138,6 +145,7 @@ def printProducts(nItems):
         i += 1
         print('Produto ' + str(i) + ': ' + str(xProd[nItem]))
     print('\nCaso identifique algum problema abra o arquivo txt e edite.')
+
 
 if __name__ == '__main__':
     main()
