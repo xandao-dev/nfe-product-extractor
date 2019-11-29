@@ -96,11 +96,12 @@ def generateOutputFileFirstMode(outputFile, nItems):
     outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(fixedTextC + separator + str(cProd[nItem]) +
-                         separator + str(xProd[nItem]) + separator + str(cEAN[nItem]) +
-                         separator + str(NCM[nItem]) + separator3x + str(uCom[nItem]) +
-                         separator + str(vUnCom[nItem]) + separator2x + str(uCom[nItem]) +
-                         separator + str(vUnCom[nItem]) + separator + '1.000' + separator + lineBreak)
+        outputFile.write(fixedTextC + separator + cProd[nItem] +
+                         separator + xProd[nItem] + separator + cEAN[nItem] +
+                         separator + NCM[nItem] + separator3x + uCom[nItem] +
+                         separator + vUnCom[nItem] + separator2x + uCom[nItem] +
+                         separator + vUnCom[nItem] + separator + '1.000' + separator + 
+                         lineBreak)
 
 
 def generateOutputFileSecondMode(outputFile, nItems):
@@ -110,14 +111,14 @@ def generateOutputFileSecondMode(outputFile, nItems):
     outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(fixedTextC + separator + str(cProd[nItem]) +
-                         separator + str(cEAN[nItem]) + separator + str(xProd[nItem]) +
-                         separator + str(NCM[nItem]) + separator3x + str(CFOP[nItem]) +
-                         separator + str(uCom[nItem]) + separator + str(qCom[nItem]) +
-                         separator + str(vUnCom[nItem]) + separator + str(vProd[nItem]) +
-                         separator + str(cEANTrib[nItem]) + separator + str(uTrib[nItem]) +
-                         separator + str(qTrib[nItem]) + separator + str(vUnTrib[nItem]) +
-                         separator3x + separator2x + str(indTot[nItem]) + separator3x + 
+        outputFile.write(fixedTextC + separator + cProd[nItem] +
+                         separator + cEAN[nItem] + separator + xProd[nItem] +
+                         separator + NCM[nItem] + separator3x + CFOP[nItem] +
+                         separator + uCom[nItem] + separator + qCom[nItem] +
+                         separator + vUnCom[nItem] + separator + vProd[nItem] +
+                         separator + cEANTrib[nItem] + separator + uTrib[nItem] +
+                         separator + qTrib[nItem] + separator + vUnTrib[nItem] +
+                         separator3x + separator2x + indTot[nItem] + separator3x + 
                          separator + lineBreak)
 
 
@@ -127,14 +128,14 @@ def generateOutputFileThirdMode(outputFile, nItems):
     outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(fixedTextC + separator + str(cProd[nItem]) +
-                         separator + str(cEAN[nItem]) + separator + str(xProd[nItem]) +
-                         separator + str(NCM[nItem]) + separator3x + str(CFOP[nItem]) +
-                         separator + str(uCom[nItem]) + separator + str(qCom[nItem]) +
-                         separator + str(vUnCom[nItem]) + separator + str(vProd[nItem]) +
-                         separator + str(cEANTrib[nItem]) + separator + str(uTrib[nItem]) +
-                         separator + str(qTrib[nItem]) + separator + str(vUnTrib[nItem]) +
-                         separator3x + separator2x + str(indTot[nItem]) + separator3x + 
+        outputFile.write(fixedTextC + separator + cProd[nItem] +
+                         separator + cEAN[nItem] + separator + xProd[nItem] +
+                         separator + NCM[nItem] + separator3x + CFOP[nItem] +
+                         separator + uCom[nItem] + separator + qCom[nItem] +
+                         separator + vUnCom[nItem] + separator + vProd[nItem] +
+                         separator + cEANTrib[nItem] + separator + uTrib[nItem] +
+                         separator + qTrib[nItem] + separator + vUnTrib[nItem] +
+                         separator3x + separator2x + indTot[nItem] + separator3x + 
                          separator + lineBreak)
 
 
