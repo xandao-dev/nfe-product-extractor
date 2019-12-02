@@ -1,5 +1,5 @@
-import tkinter as tk
 import xml.etree.ElementTree as ET
+import tkinter
 from tkinter import filedialog
 
 nItems = 0
@@ -30,12 +30,14 @@ indTot = []
 
 
 def main():
-    rootTK = tk.Tk()
+    rootTK = tkinter.Tk()
     rootTK.withdraw()
+
     print('Escolha a nota fiscal (XML) do seu fornecedor: ')
     file_path = filedialog.askopenfilename()
 
-    output_file_path = 'Products.txt'
+    print('Escolha um local para salvar o aquivo de produtos (TXT): ')
+    output_file_path = filedialog.asksaveasfilename()
     outputFile = open(output_file_path, 'w')
 
     tree = ET.parse(file_path)
@@ -120,7 +122,6 @@ def generate_output_file_full_mode(outputFile, nItems):
                          separator + indTot[nItem] + separator + CEST[nItem] +
                          separator + lineBreak)
 
-
 def print_products(nItems):
     i = 0
     print('Arquivo gerado com os seguintes produtos:\n')
@@ -132,12 +133,3 @@ def print_products(nItems):
 
 if __name__ == '__main__':
     main()
-
-
-def file_save():
-    f = tkFileDialog.asksaveasfile(mode='w', defaultextension=".txt")
-    if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
-        return
-    text2save = str(text.get(1.0, END)) # starts from `1.0`, not `0.0`
-    f.write(text2save)
-    f.close() # `()` was missing.
