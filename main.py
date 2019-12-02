@@ -9,7 +9,9 @@ separator3x = '|||'
 lineBreak = '\n'
 fixedTextA = 'PRODUTO|'
 fixedTextB = 'A|1.02'
-fixedTextC = 'I'
+groupA = 'A'
+version = '1.02'
+groupI = 'I'
 cProd = []
 xProd = []
 cEAN = []
@@ -39,15 +41,14 @@ def main():
 
     tree = ET.parse(file_path)
     rootET = tree.getroot()
-    print('Aguarde um instante...\n')
 
     nItems = iterateOverXml(rootET)
-    generateOutputFileFirstMode(outputFile, nItems)
-    #generateOutputFileSecondMode(outputFile, nItems)
+    #generateOutputFileFirstMode(outputFile, nItems)
+    generateOutputFileSecondMode(outputFile, nItems)
     #generateOutputFileThirdMode(outputFile, nItems)
     printProducts(nItems)
-
     outputFile.close()
+    input()
 
 
 def iterateOverXml(rootET):
@@ -91,44 +92,44 @@ def iterateOverXml(rootET):
 
 
 def generateOutputFileFirstMode(outputFile, nItems):
-    # I|cProd|xProd|cEAN|NCM|||uCom|vUnCom||uCom(uTrib)|vUnCom(vUnTrib)|1.000|
-
+    #cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
+    #vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
+    # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
     outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(fixedTextC + separator + cProd[nItem] +
-                         separator + xProd[nItem] + separator + cEAN[nItem] +
-                         separator + NCM[nItem] + separator3x + uCom[nItem] +
-                         separator + vUnCom[nItem] + separator2x + uCom[nItem] +
-                         separator + vUnCom[nItem] + separator + '1.000' + separator + 
-                         lineBreak)
-
-
-def generateOutputFileSecondMode(outputFile, nItems):
-    # I|cProd|cEAN|xProd|NCM|*cBenef|*EXTIPI|CFOP|uCom|qCom|vUnCom|vProd|cEANTrib|
-    # uTrib|qTrib|vUnTrib|*vFrete|*vSeg|*vDesc|*vOutro|indTot|*xPed|*nItemPed|*nFCI|
-
-    outputFile.write(fixedTextA + str(nItems) + lineBreak)
-    for nItem in range(0, nItems):
-        outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(fixedTextC + separator + cProd[nItem] +
-                         separator + cEAN[nItem] + separator + xProd[nItem] +
-                         separator + NCM[nItem] + separator3x + CFOP[nItem] +
-                         separator + uCom[nItem] + separator + qCom[nItem] +
-                         separator + vUnCom[nItem] + separator + vProd[nItem] +
-                         separator + cEANTrib[nItem] + separator + uTrib[nItem] +
-                         separator + qTrib[nItem] + separator + vUnTrib[nItem] +
-                         separator3x + separator2x + indTot[nItem] + separator3x + 
+        outputFile.write(groupI + separator + cProd[nItem] +
+                         separator + xProd[nItem] + separator2x +
+                         NCM[nItem] + separator3x + uCom[nItem] +
+                         separator + vUnCom[nItem] + separator2x + uTrib[nItem] +
+                         separator + vUnTrib[nItem] + separator + indTot[nItem] + 
                          separator + lineBreak)
 
 
-def generateOutputFileThirdMode(outputFile, nItems):
-    # Mude como quiser
+def generateOutputFileSecondMode(outputFile, nItems):
+    #cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
+    #vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
+    # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|uTrib|vUnTrib|indTot|CEST
 
     outputFile.write(fixedTextA + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
         outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(fixedTextC + separator + cProd[nItem] +
+        outputFile.write(groupI + separator + cProd[nItem] +
+                         separator + xProd[nItem] + separator + cEAN[nItem] +
+                         separator + NCM[nItem] + separator3x + uCom[nItem] +
+                         separator + vUnCom[nItem] + separator + cEANTrib[nItem] + 
+                         separator + uTrib[nItem] + separator + vUnTrib[nItem] + 
+                         separator + indTot[nItem] + separator + CEST[nItem] + 
+                         separator + lineBreak)
+
+def generateOutputFileThirdMode(outputFile, nItems):
+    # I|cProd|xProd|cEAN|NCM|*cBenef|*EXTIPI|uCom|qCom|vUnCom|vProd|cEANTrib|
+    # uTrib|qTrib|vUnTrib|*vFrete|*vSeg|*vDesc|*vOutro|indTot|*xPed|*nItemPed|*nFCI| -> nao funciona
+
+    outputFile.write(fixedTextA + str(nItems) + lineBreak)
+    for nItem in range(0, nItems):
+        outputFile.write(fixedTextB + lineBreak)
+        outputFile.write(groupI + separator + cProd[nItem] +
                          separator + cEAN[nItem] + separator + xProd[nItem] +
                          separator + NCM[nItem] + separator3x + CFOP[nItem] +
                          separator + uCom[nItem] + separator + qCom[nItem] +
