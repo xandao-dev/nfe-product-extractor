@@ -43,9 +43,8 @@ def main():
     rootET = tree.getroot()
 
     nItems = iterateOverXml(rootET)
-    #generateOutputFileFirstMode(outputFile, nItems)
-    generateOutputFileSecondMode(outputFile, nItems)
-    #generateOutputFileThirdMode(outputFile, nItems)
+    #generateOutputFileSimpleMode(outputFile, nItems)
+    generateOutputFileFullMode(outputFile, nItems)
     printProducts(nItems)
     outputFile.close()
     input()
@@ -91,7 +90,7 @@ def iterateOverXml(rootET):
     return nItems
 
 
-def generateOutputFileFirstMode(outputFile, nItems):
+def generateOutputFileSimpleMode(outputFile, nItems):
     #cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     #vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
@@ -106,7 +105,7 @@ def generateOutputFileFirstMode(outputFile, nItems):
                          separator + lineBreak)
 
 
-def generateOutputFileSecondMode(outputFile, nItems):
+def generateOutputFileFullMode(outputFile, nItems):
     #cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     #vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|uTrib|vUnTrib|indTot|CEST
@@ -120,23 +119,6 @@ def generateOutputFileSecondMode(outputFile, nItems):
                          separator + vUnCom[nItem] + separator + cEANTrib[nItem] + 
                          separator + uTrib[nItem] + separator + vUnTrib[nItem] + 
                          separator + indTot[nItem] + separator + CEST[nItem] + 
-                         separator + lineBreak)
-
-def generateOutputFileThirdMode(outputFile, nItems):
-    # I|cProd|xProd|cEAN|NCM|*cBenef|*EXTIPI|uCom|qCom|vUnCom|vProd|cEANTrib|
-    # uTrib|qTrib|vUnTrib|*vFrete|*vSeg|*vDesc|*vOutro|indTot|*xPed|*nItemPed|*nFCI| -> nao funciona
-
-    outputFile.write(fixedTextA + str(nItems) + lineBreak)
-    for nItem in range(0, nItems):
-        outputFile.write(fixedTextB + lineBreak)
-        outputFile.write(groupI + separator + cProd[nItem] +
-                         separator + cEAN[nItem] + separator + xProd[nItem] +
-                         separator + NCM[nItem] + separator3x + CFOP[nItem] +
-                         separator + uCom[nItem] + separator + qCom[nItem] +
-                         separator + vUnCom[nItem] + separator + vProd[nItem] +
-                         separator + cEANTrib[nItem] + separator + uTrib[nItem] +
-                         separator + qTrib[nItem] + separator + vUnTrib[nItem] +
-                         separator3x + separator2x + indTot[nItem] + separator3x + 
                          separator + lineBreak)
 
 
