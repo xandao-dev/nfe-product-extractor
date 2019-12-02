@@ -7,8 +7,7 @@ separator = '|'
 separator2x = '||'
 separator3x = '|||'
 lineBreak = '\n'
-fixedTextA = 'PRODUTO|'
-fixedTextB = 'A|1.02'
+produtoTAG = 'PRODUTO'
 groupA = 'A'
 version = '1.02'
 groupI = 'I'
@@ -42,15 +41,15 @@ def main():
     tree = ET.parse(file_path)
     rootET = tree.getroot()
 
-    nItems = iterateOverXml(rootET)
-    #generateOutputFileSimpleMode(outputFile, nItems)
-    generateOutputFileFullMode(outputFile, nItems)
-    printProducts(nItems)
+    nItems = iterate_over_xml(rootET)
+    #generate_output_file_simple_mode(outputFile, nItems)
+    generate_output_file_full_mode(outputFile, nItems)
+    print_products(nItems)
     outputFile.close()
     input()
 
 
-def iterateOverXml(rootET):
+def iterate_over_xml(rootET):
     nItems = 0
     for det in rootET.iter('{http://www.portalfiscal.inf.br/nfe}prod'):
         nItems += 1
@@ -90,39 +89,39 @@ def iterateOverXml(rootET):
     return nItems
 
 
-def generateOutputFileSimpleMode(outputFile, nItems):
-    #cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
-    #vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
+def generate_output_file_simple_mode(outputFile, nItems):
+    # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
+    # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
-    outputFile.write(fixedTextA + str(nItems) + lineBreak)
+    outputFile.write(produtoTAG + separator + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
-        outputFile.write(fixedTextB + lineBreak)
+        outputFile.write(groupA + separator + version + lineBreak)
         outputFile.write(groupI + separator + cProd[nItem] +
                          separator + xProd[nItem] + separator2x +
                          NCM[nItem] + separator3x + uCom[nItem] +
                          separator + vUnCom[nItem] + separator2x + uTrib[nItem] +
-                         separator + vUnTrib[nItem] + separator + indTot[nItem] + 
+                         separator + vUnTrib[nItem] + separator + indTot[nItem] +
                          separator + lineBreak)
 
 
-def generateOutputFileFullMode(outputFile, nItems):
-    #cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
-    #vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
+def generate_output_file_full_mode(outputFile, nItems):
+    # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
+    # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|uTrib|vUnTrib|indTot|CEST
 
-    outputFile.write(fixedTextA + str(nItems) + lineBreak)
+    outputFile.write(produtoTAG + separator + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
-        outputFile.write(fixedTextB + lineBreak)
+        outputFile.write(groupA + separator + version + lineBreak)
         outputFile.write(groupI + separator + cProd[nItem] +
                          separator + xProd[nItem] + separator + cEAN[nItem] +
                          separator + NCM[nItem] + separator3x + uCom[nItem] +
-                         separator + vUnCom[nItem] + separator + cEANTrib[nItem] + 
-                         separator + uTrib[nItem] + separator + vUnTrib[nItem] + 
-                         separator + indTot[nItem] + separator + CEST[nItem] + 
+                         separator + vUnCom[nItem] + separator + cEANTrib[nItem] +
+                         separator + uTrib[nItem] + separator + vUnTrib[nItem] +
+                         separator + indTot[nItem] + separator + CEST[nItem] +
                          separator + lineBreak)
 
 
-def printProducts(nItems):
+def print_products(nItems):
     i = 0
     print('Arquivo gerado com os seguintes produtos:\n')
     for nItem in range(0, nItems):
@@ -133,3 +132,12 @@ def printProducts(nItems):
 
 if __name__ == '__main__':
     main()
+
+
+def file_save():
+    f = tkFileDialog.asksaveasfile(mode='w', defaultextension=".txt")
+    if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
+        return
+    text2save = str(text.get(1.0, END)) # starts from `1.0`, not `0.0`
+    f.write(text2save)
+    f.close() # `()` was missing.
