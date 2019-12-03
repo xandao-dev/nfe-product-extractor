@@ -17,7 +17,7 @@ n_elements = 16
 
 # LISTS
 cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd, \
-cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
+    cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
 
 nfe_elements = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
                 vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot]
@@ -45,7 +45,7 @@ def main():
         rootET = tree.getroot()
         nItems = iterate_over_xml(rootET)
         making_sure_the_lists_is_not_empty(nItems)
-        # formating_lists(nItems)
+        formating_lists(nItems)
         #generate_output_file_simple_mode(outputFiles, nItems)
         generate_output_file_full_mode(outputFiles, nItems)
         print_products(nItems)
@@ -106,13 +106,19 @@ def making_sure_the_lists_is_not_empty(nItems):
                 nfe_elements[j].append('')
 
 
-# def formating_lists(nItems):
-#    pass
+def formating_lists(nItems):
+    # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
+    # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
+    for nItem in nItems:
+        vUnCom[nItem] = str(round(float(vUnCom[nItem]),4))
+        vUnTrib[nItem] = str(round(float(vUnTrib[nItem]),4))
+        if cEAN[nItem] == 'SEM GTIN':
+            cEAN[nItem] = ''
+        if cEANTrib[nItem] == 'SEM GTIN':
+            cEAN[nItem] = ''
 
 
 def generate_output_file_simple_mode(outputFile, nItems):
-    # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
-    # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
     outputFile.write(produtoTAG + separator + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
@@ -126,9 +132,6 @@ def generate_output_file_simple_mode(outputFile, nItems):
 
 
 def generate_output_file_full_mode(outputFile, nItems):
-    # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
-    # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
-
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
     # uTrib|vUnTrib|indTot|CEST
 
@@ -153,7 +156,7 @@ def print_products(nItems):
 
 
 def reset_lists():
-    for i in range(n_elements):
+    for i in range(len(nfe_elements)):
         nfe_elements[i].clear()
 
 
