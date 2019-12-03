@@ -109,7 +109,7 @@ def making_sure_the_lists_is_not_empty(nItems):
 def formating_lists(nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
-    for nItem in nItems:
+    for nItem in range(nItems):
         vUnCom[nItem] = str(round(float(vUnCom[nItem]),4))
         vUnTrib[nItem] = str(round(float(vUnTrib[nItem]),4))
         if cEAN[nItem] == 'SEM GTIN':
