@@ -8,20 +8,20 @@ Ele feito para funcionar com o emissor do Sebrae 4.01, que utiliza o layout de N
 
 Instale o [python3.7.x](https://www.python.org/downloads/) para poder usar o script.
 
-Agora, abra a pasta do projeto e instale os requisitos:
-
-```bash
-python3.7 -m pip install -r requirements.txt
-```
+Todos os pré-requisitos já vem com o python 3.7.
 
 ## Uso
 
-1. Insira uma **nota fical eletrônica de produto 4.0 (NF-e 4.0)** no formato **.XML**. Será produzido um arquivo chamado **"Products.txt"**
-2. Abra o **Emissor de NF-e gratuito do Sebrae** e selecione a empresa.
+1. Insira as **notas ficais eletrônicas de produto 4.0 (NF-e 4.0)** no formato **.XML**. 
+2. Escolha uma pasta para salvar os arquivos.
+1. Será salvo na pasta escolhida arquivos chamados **"Products0.txt, Products1.txt, Products2.txt ..."**
+1. Abra o **Emissor de NF-e gratuito do Sebrae** e selecione a sua empresa.
 1. Agora vá em **Sistema** e depois em **Importar Arquivos**, como na imagem a seguir.![](./assets/images/img1.jpg)
-1. Selecione no emissor o nosso arquivo **"Products.txt"**
+1. Selecione no emissor a pasta que contém os aquivos **"Products0.txt, Products1.txt, Products2.txt ..."**
 1. Clique em **Importar**
 1. Pronto, os produtos foram importados! :clap::clap::clap:
+
+OBS.: Caso tenha algum erro na importação você pode entrar no arquivo .TXT gerado e editar. Você também deve contatar o desenvolvedor com um printscreen do erro para evitar problemas futuros.
 
 ## Contribuição
 
