@@ -23,6 +23,9 @@ cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd, \
 nfe_elements = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
                 vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot]
 
+nfe_elements_names = ['cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala', \
+                      'CFOP', 'uCom', 'qCom','vUnCom', 'vProd', 'cEANTrib', \
+                      'uTrib', 'qTrib', 'vUnTrib', 'indTot']
 
 def main():
     rootTK = tkinter.Tk()
@@ -60,53 +63,24 @@ def main():
 
 def iterate_over_xml(rootET):
     nItems = 0
-    for det in rootET.iter('{0}prod'.format(portal)):
+    for product in rootET.iter('{0}prod'.format(portal)):
         nItems += 1
-        for detList in list(det):
-            for cProdITER in detList.iter('{0}cProd'.format(portal)):
-                cProd.append(cProdITER.text)
-            for xProdITER in detList.iter('{0}xProd'.format(portal)):
-                xProd.append(xProdITER.text)
-            for cEANITER in detList.iter('{0}cEAN'.format(portal)):
-                cEAN.append(cEANITER.text)
-            for NCMITER in detList.iter('{0}NCM'.format(portal)):
-                NCM.append(NCMITER.text)
-            for CESTITER in detList.iter('{0}CEST'.format(portal)):
-                CEST.append(CESTITER.text)
-            for indEscalaITER in detList.iter('{0}indEscala'.format(portal)):
-                indEscala.append(indEscalaITER.text)
-            for CFOPITER in detList.iter('{0}CFOP'.format(portal)):
-                CFOP.append(CFOPITER.text)
-            for uComITER in detList.iter('{0}uCom'.format(portal)):
-                uCom.append(uComITER.text)
-            for qComITER in detList.iter('{0}qCom'.format(portal)):
-                qCom.append(qComITER.text)
-            for vUnComITER in detList.iter('{0}vUnCom'.format(portal)):
-                vUnCom.append(vUnComITER.text)
-            for vProdITER in detList.iter('{0}vProd'.format(portal)):
-                vProd.append(vProdITER.text)
-            for cEANTribITER in detList.iter('{0}cEANTrib'.format(portal)):
-                cEANTrib.append(cEANTribITER.text)
-            for uTribITER in detList.iter('{0}uTrib'.format(portal)):
-                uTrib.append(uTribITER.text)
-            for qTribITER in detList.iter('{0}qTrib'.format(portal)):
-                qTrib.append(qTribITER.text)
-            for vUnTribITER in detList.iter('{0}vUnTrib'.format(portal)):
-                vUnTrib.append(vUnTribITER.text)
-            for indTotITER in detList.iter('{0}indTot'.format(portal)):
-                indTot.append(indTotITER.text)
+        for product_element in list(product):
+            for i in range(n_elements):
+                if product_element.tag == '{0}{1}'.format(portal, nfe_elements_names[i]):
+                    nfe_elements[i].append(product_element.text)
     return nItems
 
 
 def making_sure_the_lists_is_not_empty(nItems):
     for i in range(nItems):
-        for j in range(len(nfe_elements)):
+        for j in range(n_elements):
             if not nfe_elements[j]:
                 nfe_elements[j].append('')
             if not nfe_elements[j][i]:
                 nfe_elements[j].append('')
 
-
+#TRY EXCEPT NA CONVERSAO
 def formating_lists(nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
@@ -131,7 +105,7 @@ def generate_output_file_simple_mode(outputFile, nItems):
                          separator + vUnTrib[nItem] + separator + indTot[nItem] +
                          separator + lineBreak)
 
-
+#BUG EM ALGUNS ARQUIVOS(LN 122)
 def generate_output_file_full_mode(outputFile, nItems):
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
     # uTrib|vUnTrib|indTot|CEST
