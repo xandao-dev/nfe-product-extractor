@@ -36,13 +36,12 @@ def main():
 
     print('Escolha as notas fiscais (XML) dos seus fornecedores: ')
     xml_files_path = filedialog.askopenfilenames(
-        title='Escolha as NF-e dos fornecedos', 
-        filetypes=[('XML document', ('.XML','.xml')), ('all files', '.*')])
+        title='Escolha as NF-e dos fornecedos',
+        filetypes=[('XML document', ('.XML', '.xml')), ('all files', '.*')])
 
     print('Escolha um local para salvar os aquivos de produtos (TXT): ')
     output_files_directory = Path(filedialog.askdirectory(
         title='Salvando os produtos'))
-    print(type(output_files_directory))
 
     product_index = 0
     for xml_file in xml_files_path:
@@ -57,8 +56,9 @@ def main():
         print_products(nItems)
         product_index += 1
 
+    print('Caso identifique algum problema abra o arquivo txt e edite.')
     outputFiles.close()
-    input()
+    input('Pressione \'Enter\' para sair.')
 
 
 def iterate_over_xml(rootET):
@@ -137,11 +137,11 @@ def generate_output_file_full_mode(outputFile, nItems):
 
 def print_products(nItems):
     i = 0
-    print('Arquivo gerado com os seguintes produtos:\n')
+    print('Arquivo gerado com os seguintes produtos:')
     for nItem in range(0, nItems):
         i += 1
         print('Produto ' + str(i) + ': ' + str(xProd[nItem]))
-    print('\nCaso identifique algum problema abra o arquivo txt e edite.')
+    print(lineBreak)
 
 
 if __name__ == '__main__':
