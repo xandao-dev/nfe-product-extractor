@@ -13,6 +13,7 @@ produtoTAG = 'PRODUTO'
 groupA = 'A'
 version = '1.02'
 groupI = 'I'
+portal = '{http://www.portalfiscal.inf.br/nfe}'
 
 cProd = []
 xProd = []
@@ -69,40 +70,40 @@ def main():
 
 def iterate_over_xml(rootET):
     nItems = 0
-    for det in rootET.iter('{http://www.portalfiscal.inf.br/nfe}prod'):
+    for det in rootET.iter('{0}prod'.format(portal)):
         nItems += 1
         for detList in list(det):
-            for cProdITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}cProd'):
+            for cProdITER in detList.iter('{0}cProd'.format(portal)):
                 cProd.append(cProdITER.text)
-            for xProdITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}xProd'):
+            for xProdITER in detList.iter('{0}xProd'.format(portal)):
                 xProd.append(xProdITER.text)
-            for cEANITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}cEAN'):
+            for cEANITER in detList.iter('{0}cEAN'.format(portal)):
                 cEAN.append(cEANITER.text)
-            for NCMITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}NCM'):
+            for NCMITER in detList.iter('{0}NCM'.format(portal)):
                 NCM.append(NCMITER.text)
-            for CESTITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}CEST'):
+            for CESTITER in detList.iter('{0}CEST'.format(portal)):
                 CEST.append(CESTITER.text)
-            for indEscalaITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}indEscala'):
+            for indEscalaITER in detList.iter('{0}indEscala'.format(portal)):
                 indEscala.append(indEscalaITER.text)
-            for CFOPITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}CFOP'):
+            for CFOPITER in detList.iter('{0}CFOP'.format(portal)):
                 CFOP.append(CFOPITER.text)
-            for uComITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}uCom'):
+            for uComITER in detList.iter('{0}uCom'.format(portal)):
                 uCom.append(uComITER.text)
-            for qComITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}qCom'):
+            for qComITER in detList.iter('{0}qCom'.format(portal)):
                 qCom.append(qComITER.text)
-            for vUnComITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}vUnCom'):
+            for vUnComITER in detList.iter('{0}vUnCom'.format(portal)):
                 vUnCom.append(vUnComITER.text)
-            for vProdITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}vProd'):
+            for vProdITER in detList.iter('{0}vProd'.format(portal)):
                 vProd.append(vProdITER.text)
-            for cEANTribITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}cEANTrib'):
+            for cEANTribITER in detList.iter('{0}cEANTrib'.format(portal)):
                 cEANTrib.append(cEANTribITER.text)
-            for uTribITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}uTrib'):
+            for uTribITER in detList.iter('{0}uTrib'.format(portal)):
                 uTrib.append(uTribITER.text)
-            for qTribITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}qTrib'):
+            for qTribITER in detList.iter('{0}qTrib'.format(portal)):
                 qTrib.append(qTribITER.text)
-            for vUnTribITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}vUnTrib'):
+            for vUnTribITER in detList.iter('{0}vUnTrib'.format(portal)):
                 vUnTrib.append(vUnTribITER.text)
-            for indTotITER in detList.iter('{http://www.portalfiscal.inf.br/nfe}indTot'):
+            for indTotITER in detList.iter('{0}indTot'.format(portal)):
                 indTot.append(indTotITER.text)
     return nItems
 
