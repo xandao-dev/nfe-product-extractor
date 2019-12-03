@@ -27,6 +27,8 @@ nfe_elements_names = ['cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala', \
                       'CFOP', 'uCom', 'qCom','vUnCom', 'vProd', 'cEANTrib', \
                       'uTrib', 'qTrib', 'vUnTrib', 'indTot']
 
+
+#IMPLEMENTAR TRY EXCEPT
 def main():
     rootTK = tkinter.Tk()
     rootTK.withdraw()
@@ -60,7 +62,7 @@ def main():
     outputFiles.close()
     input(lineBreak + 'Pressione \'Enter\' para sair.')
 
-
+#SEPARAR A FUNCAO
 def iterate_over_xml(rootET):
     nItems = 0
     for product in rootET.iter('{0}prod'.format(portal)):
@@ -68,7 +70,8 @@ def iterate_over_xml(rootET):
         for product_element in list(product):
             for i in range(n_elements):
                 if product_element.tag == '{0}{1}'.format(portal, nfe_elements_names[i]):
-                    nfe_elements[i].append(product_element.text)
+                    if not product_element.text == None:
+                        nfe_elements[i].append(product_element.text)
     return nItems
 
 
@@ -80,13 +83,15 @@ def making_sure_the_lists_is_not_empty(nItems):
             if not nfe_elements[j][i]:
                 nfe_elements[j].append('')
 
-#TRY EXCEPT NA CONVERSAO
+
 def formating_lists(nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     for nItem in range(nItems):
-        vUnCom[nItem] = ("{0:.4f}".format(float(vUnCom[nItem])))
-        vUnTrib[nItem] = ("{0:.4f}".format(float(vUnTrib[nItem])))
+        if not vUnCom[nItem] == '': 
+            vUnCom[nItem] = ("{0:.4f}".format(float(vUnCom[nItem])))
+        if not vUnTrib[nItem] == '':
+            vUnTrib[nItem] = ("{0:.4f}".format(float(vUnTrib[nItem])))
         if cEAN[nItem] == 'SEM GTIN':
             cEAN[nItem] = ''
         if cEANTrib[nItem] == 'SEM GTIN':
@@ -105,7 +110,7 @@ def generate_output_file_simple_mode(outputFile, nItems):
                          separator + vUnTrib[nItem] + separator + indTot[nItem] +
                          separator + lineBreak)
 
-#BUG EM ALGUNS ARQUIVOS(LN 122)
+
 def generate_output_file_full_mode(outputFile, nItems):
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
     # uTrib|vUnTrib|indTot|CEST
