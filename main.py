@@ -61,6 +61,7 @@ def main():
         #generate_output_file_simple_mode(outputFiles, nItems)
         generate_output_file_full_mode(outputFiles, nItems)
         print_products(nItems)
+        reset_lists()
         product_index += 1
 
     print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
@@ -157,6 +158,9 @@ def print_products(nItems):
         i += 1
         print('Produto ' + str(i) + ': ' + str(xProd[nItem]))
 
+def reset_lists():
+    for i in range(len(nfe_elements)):
+        nfe_elements[i].clear()
 
 if __name__ == '__main__':
     main()
