@@ -35,7 +35,7 @@ def main():
 
     print('Escolha um local para salvar os aquivos de produtos (TXT): ')
     output_files_directory = Path(filedialog.askdirectory(
-        title='Salvando os produtos'))
+        title='Escolha um diretorio para salvar'))
 
     product_index = 0
     for xml_file in xml_files_path:
