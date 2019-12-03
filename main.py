@@ -31,8 +31,8 @@ qTrib = []
 vUnTrib = []
 indTot = []
 
-nfe_items = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, 
-             vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot]
+nfe_elements = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, 
+                vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot]
 
 
 def main():
@@ -109,86 +109,11 @@ def iterate_over_xml(rootET):
 
 def making_sure_the_list_is_not_empty(nItems):
     for i in range(nItems):
-        if not cProd:
-            cProd.append('')
-        if not cProd[i]:
-            cProd.append('')
-
-        if not xProd:
-            xProd.append('')
-        if not xProd[i]:
-            xProd.append('')
-
-        if not cEAN:
-            cEAN.append('')
-        if not cEAN[i]:
-            cEAN.append('')
-
-        if not NCM:
-            NCM.append('')
-        if not NCM[i]:
-            NCM.append('')
-
-        if not CEST:
-            CEST.append('')
-        if not CEST[i]:
-            CEST.append('')
-
-        if not indEscala:
-            indEscala.append('')
-        if not indEscala[i]:
-            indEscala.append('')
-
-        if not CFOP:
-            CFOP.append('')
-        if not CFOP[i]:
-            CFOP.append('')
-
-        if not uCom:
-            uCom.append('')
-        if not uCom[i]:
-            uCom.append('')
-
-        if not qCom:
-            qCom.append('')
-        if not qCom[i]:
-            qCom.append('')
-
-        if not vUnCom:
-            vUnCom.append('')
-        if not vUnCom[i]:
-            vUnCom.append('')
-
-        if not vProd:
-            vProd.append('')
-        if not vProd[i]:
-            vProd.append('')
-
-        if not cEANTrib:
-            cEANTrib.append('')
-        if not cEANTrib[i]:
-            cEANTrib.append('')
-
-        if not uTrib:
-            uTrib.append('')
-        if not uTrib[i]:
-            uTrib.append('')
-
-        if not qTrib:
-            qTrib.append('')
-        if not qTrib[i]:
-            qTrib.append('')
-
-        if not vUnTrib:
-            vUnTrib.append('')
-        if not vUnTrib[i]:
-            vUnTrib.append('')
-
-        if not indTot:
-            indTot.append('')
-        if not indTot[i]:
-            indTot.append('')
-
+        for j in range(len(nfe_elements)):
+            if not nfe_elements[j]:
+                nfe_elements[j].append('')
+            if not nfe_elements[j][i]:
+                nfe_elements[j].append('')
 
 def generate_output_file_simple_mode(outputFile, nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
