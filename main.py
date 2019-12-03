@@ -3,6 +3,7 @@ from pathlib import Path
 import tkinter
 from tkinter import filedialog
 
+
 nItems = 0
 separator = '|'
 separator2x = '||'
@@ -12,6 +13,7 @@ produtoTAG = 'PRODUTO'
 groupA = 'A'
 version = '1.02'
 groupI = 'I'
+
 cProd = []
 xProd = []
 cEAN = []
@@ -28,6 +30,9 @@ uTrib = []
 qTrib = []
 vUnTrib = []
 indTot = []
+
+nfe_items = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, 
+             vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot]
 
 
 def main():
@@ -51,7 +56,7 @@ def main():
         tree = ET.parse(xml_file)
         rootET = tree.getroot()
         nItems = iterate_over_xml(rootET)
-        check_if_item_exists(nItems)
+        making_sure_the_list_is_not_empty(nItems)
         #generate_output_file_simple_mode(outputFiles, nItems)
         generate_output_file_full_mode(outputFiles, nItems)
         print_products(nItems)
@@ -102,7 +107,7 @@ def iterate_over_xml(rootET):
     return nItems
 
 
-def check_if_item_exists(nItems):
+def making_sure_the_list_is_not_empty(nItems):
     for i in range(nItems):
         if not cProd:
             cProd.append('')
