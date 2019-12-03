@@ -51,14 +51,15 @@ def main():
         tree = ET.parse(xml_file)
         rootET = tree.getroot()
         nItems = iterate_over_xml(rootET)
-        generate_output_file_simple_mode(outputFiles, nItems)
-        #generate_output_file_full_mode(outputFiles, nItems)
+        check_if_item_exists(nItems)
+        #generate_output_file_simple_mode(outputFiles, nItems)
+        generate_output_file_full_mode(outputFiles, nItems)
         print_products(nItems)
         product_index += 1
 
-    print('Caso identifique algum problema abra o arquivo txt e edite.')
+    print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
     outputFiles.close()
-    input('Pressione \'Enter\' para sair.')
+    input(lineBreak + 'Pressione \'Enter\' para sair.')
 
 
 def iterate_over_xml(rootET):
@@ -101,6 +102,89 @@ def iterate_over_xml(rootET):
     return nItems
 
 
+def check_if_item_exists(nItems):
+    for i in range(nItems):
+        if not cProd:
+            cProd.append('')
+        if not cProd[i]:
+            cProd.append('')
+
+        if not xProd:
+            xProd.append('')
+        if not xProd[i]:
+            xProd.append('')
+
+        if not cEAN:
+            cEAN.append('')
+        if not cEAN[i]:
+            cEAN.append('')
+
+        if not NCM:
+            NCM.append('')
+        if not NCM[i]:
+            NCM.append('')
+
+        if not CEST:
+            CEST.append('')
+        if not CEST[i]:
+            CEST.append('')
+
+        if not indEscala:
+            indEscala.append('')
+        if not indEscala[i]:
+            indEscala.append('')
+
+        if not CFOP:
+            CFOP.append('')
+        if not CFOP[i]:
+            CFOP.append('')
+
+        if not uCom:
+            uCom.append('')
+        if not uCom[i]:
+            uCom.append('')
+
+        if not qCom:
+            qCom.append('')
+        if not qCom[i]:
+            qCom.append('')
+
+        if not vUnCom:
+            vUnCom.append('')
+        if not vUnCom[i]:
+            vUnCom.append('')
+
+        if not vProd:
+            vProd.append('')
+        if not vProd[i]:
+            vProd.append('')
+
+        if not cEANTrib:
+            cEANTrib.append('')
+        if not cEANTrib[i]:
+            cEANTrib.append('')
+
+        if not uTrib:
+            uTrib.append('')
+        if not uTrib[i]:
+            uTrib.append('')
+
+        if not qTrib:
+            qTrib.append('')
+        if not qTrib[i]:
+            qTrib.append('')
+
+        if not vUnTrib:
+            vUnTrib.append('')
+        if not vUnTrib[i]:
+            vUnTrib.append('')
+
+        if not indTot:
+            indTot.append('')
+        if not indTot[i]:
+            indTot.append('')
+
+
 def generate_output_file_simple_mode(outputFile, nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
@@ -137,11 +221,10 @@ def generate_output_file_full_mode(outputFile, nItems):
 
 def print_products(nItems):
     i = 0
-    print('Arquivo gerado com os seguintes produtos:')
+    print(lineBreak + 'Arquivo gerado com os seguintes produtos:')
     for nItem in range(0, nItems):
         i += 1
         print('Produto ' + str(i) + ': ' + str(xProd[nItem]))
-    print(lineBreak)
 
 
 if __name__ == '__main__':
