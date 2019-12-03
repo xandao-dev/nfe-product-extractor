@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from pathlib import Path
 import tkinter
 from tkinter import filedialog
 
@@ -33,21 +34,30 @@ def main():
     rootTK = tkinter.Tk()
     rootTK.withdraw()
 
-    print('Escolha a nota fiscal (XML) do seu fornecedor: ')
-    file_path = filedialog.askopenfilename()
+    print('Escolha as notas fiscais (XML) dos seus fornecedores: ')
+    xml_files_path = filedialog.askopenfilenames(
+        title='Escolha as NF-e dos fornecedos', 
+        filetypes=[('XML document', ('.XML','.xml')), ('all files', '.*')])
 
-    print('Escolha um local para salvar o aquivo de produtos (TXT): ')
-    output_file_path = filedialog.asksaveasfilename()
-    outputFile = open(output_file_path, 'w')
+    print('Escolha um local para salvar os aquivos de produtos (TXT): ')
+    output_files_directory = Path(filedialog.askdirectory(
+        title='Salvando os produtos'))
+    print(type(output_files_directory))
 
-    tree = ET.parse(file_path)
-    rootET = tree.getroot()
+    product_index = 0
+    for xml_file in xml_files_path:
+        output_files_path = output_files_directory / \
+            'Products{0}.txt'.format(product_index)
+        outputFiles = open(output_files_path, 'w')
+        tree = ET.parse(xml_file)
+        rootET = tree.getroot()
+        nItems = iterate_over_xml(rootET)
+        generate_output_file_simple_mode(outputFiles, nItems)
+        #generate_output_file_full_mode(outputFiles, nItems)
+        print_products(nItems)
+        product_index += 1
 
-    nItems = iterate_over_xml(rootET)
-    #generate_output_file_simple_mode(outputFile, nItems)
-    generate_output_file_full_mode(outputFile, nItems)
-    print_products(nItems)
-    outputFile.close()
+    outputFiles.close()
     input()
 
 
@@ -109,7 +119,9 @@ def generate_output_file_simple_mode(outputFile, nItems):
 def generate_output_file_full_mode(outputFile, nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
-    # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|uTrib|vUnTrib|indTot|CEST
+
+    # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
+    # uTrib|vUnTrib|indTot|CEST
 
     outputFile.write(produtoTAG + separator + str(nItems) + lineBreak)
     for nItem in range(0, nItems):
@@ -121,6 +133,7 @@ def generate_output_file_full_mode(outputFile, nItems):
                          separator + uTrib[nItem] + separator + vUnTrib[nItem] +
                          separator + indTot[nItem] + separator + CEST[nItem] +
                          separator + lineBreak)
+
 
 def print_products(nItems):
     i = 0
