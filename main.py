@@ -1,3 +1,4 @@
+import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 import tkinter
@@ -110,12 +111,12 @@ def formating_lists(nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     for nItem in range(nItems):
-        vUnCom[nItem] = str(round(float(vUnCom[nItem]),4))
-        vUnTrib[nItem] = str(round(float(vUnTrib[nItem]),4))
+        vUnCom[nItem] = ("{0:.4f}".format(float(vUnCom[nItem])))
+        vUnTrib[nItem] = ("{0:.4f}".format(float(vUnTrib[nItem])))
         if cEAN[nItem] == 'SEM GTIN':
             cEAN[nItem] = ''
         if cEANTrib[nItem] == 'SEM GTIN':
-            cEAN[nItem] = ''
+            cEANTrib[nItem] = ''
 
 
 def generate_output_file_simple_mode(outputFile, nItems):
