@@ -3,8 +3,7 @@ from pathlib import Path
 import tkinter
 from tkinter import filedialog
 
-
-nItems = 0
+# CONSTANTS
 separator = '|'
 separator2x = '||'
 separator3x = '|||'
@@ -14,25 +13,13 @@ groupA = 'A'
 version = '1.02'
 groupI = 'I'
 portal = '{http://www.portalfiscal.inf.br/nfe}'
+n_elements = 16
 
-cProd = []
-xProd = []
-cEAN = []
-NCM = []
-CEST = []
-indEscala = []
-CFOP = []
-uCom = []
-qCom = []
-vUnCom = []
-vProd = []
-cEANTrib = []
-uTrib = []
-qTrib = []
-vUnTrib = []
-indTot = []
+# LISTS
+cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd, \
+cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
 
-nfe_elements = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, 
+nfe_elements = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
                 vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot]
 
 
@@ -57,7 +44,8 @@ def main():
         tree = ET.parse(xml_file)
         rootET = tree.getroot()
         nItems = iterate_over_xml(rootET)
-        making_sure_the_list_is_not_empty(nItems)
+        making_sure_the_lists_is_not_empty(nItems)
+        # formating_lists(nItems)
         #generate_output_file_simple_mode(outputFiles, nItems)
         generate_output_file_full_mode(outputFiles, nItems)
         print_products(nItems)
@@ -109,13 +97,18 @@ def iterate_over_xml(rootET):
     return nItems
 
 
-def making_sure_the_list_is_not_empty(nItems):
+def making_sure_the_lists_is_not_empty(nItems):
     for i in range(nItems):
         for j in range(len(nfe_elements)):
             if not nfe_elements[j]:
                 nfe_elements[j].append('')
             if not nfe_elements[j][i]:
                 nfe_elements[j].append('')
+
+
+# def formating_lists(nItems):
+#    pass
+
 
 def generate_output_file_simple_mode(outputFile, nItems):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
@@ -158,9 +151,11 @@ def print_products(nItems):
         i += 1
         print('Produto ' + str(i) + ': ' + str(xProd[nItem]))
 
+
 def reset_lists():
-    for i in range(len(nfe_elements)):
+    for i in range(n_elements):
         nfe_elements[i].clear()
+
 
 if __name__ == '__main__':
     main()
