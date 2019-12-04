@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ElementTree
-from typing import Type, List, TextIO
+from typing import Type, List, TextIO, Tuple
 from pathlib import Path
 import tkinter
 from tkinter import filedialog
@@ -17,32 +17,25 @@ portal: str = '{http://www.portalfiscal.inf.br/nfe}'
 n_elements: int = 16
 
 # LISTS
-cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd, \
+cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd,  \
 cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
 
-nfe_elements: List[str] = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, 
-                        qCom, vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, 
-                        indTot]
+nfe_elements: List[str] = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP,
+                           uCom, qCom, vUnCom, vProd, cEANTrib, uTrib, 
+                           qTrib, vUnTrib, indTot]
 
-nfe_elements_names: List[str] = ['cProd', 'xProd', 'cEAN', 'NCM', 'CEST', \
-                                 'indEscala', 'CFOP', 'uCom', 'qCom','vUnCom',\
-                                 'vProd', 'cEANTrib', 'uTrib', 'qTrib', \
-                                 'vUnTrib', 'indTot']
+nfe_elements_names: List[str] = ['cProd', 'xProd', 'cEAN', 'NCM', 'CEST',   \
+                                 'indEscala', 'CFOP', 'uCom', 'qCom',       \
+                                 'vUnCom','vProd', 'cEANTrib', 'uTrib',     \
+                                 'qTrib','vUnTrib', 'indTot']
 
 
-#IMPLEMENTAR TRY EXCEPT
 def main():
     root_window = tkinter.Tk()
     root_window.withdraw()
 
-    print('Escolha as notas fiscais (XML) dos seus fornecedores: ')
-    xml_files_path = filedialog.askopenfilenames(
-        title='Escolha as NF-e dos fornecedos',
-        filetypes=[('XML document', ('.XML', '.xml')), ('all files', '.*')])
-
-    print('Escolha um local para salvar os aquivos de produtos (TXT): ')
-    output_files_directory = Path(filedialog.askdirectory(
-        title='Escolha um diretorio para salvar'))
+    xml_files_path = ask_where_are_xml_files()
+    output_files_directory = ask_dictory_to_save_output_files()
 
     file_index = 1
     for xml_file in xml_files_path:
@@ -60,10 +53,23 @@ def main():
         print_products(n_products)
         reset_lists()
         file_index += 1
-
-    print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
     output_file.close()
-    input(lineBreak + 'Pressione \'Enter\' para sair.')
+    say_good_bye_to_user()
+
+
+def ask_where_are_xml_files() -> Tuple[str]:
+    print('Escolha as notas fiscais (XML) dos seus fornecedores: ')
+    xml_files_path = filedialog.askopenfilenames(
+        title='Escolha as NF-e dos fornecedos',
+        filetypes=[('XML document', ('.XML', '.xml')), ('all files', '.*')])
+    return xml_files_path
+
+
+def ask_dictory_to_save_output_files() -> Type(Path):
+    print('Escolha um local para salvar os aquivos de produtos (TXT): ')
+    output_files_directory = Path(filedialog.askdirectory(
+        title='Escolha um diretorio para salvar'))
+    return output_files_directory
 
 
 def count_products(root_element: Type[ElementTree.Element]) -> int:
@@ -147,5 +153,16 @@ def reset_lists() -> None:
         nfe_elements[i].clear()
 
 
+def say_good_bye_to_user() -> None:
+        print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
+    input(lineBreak + 'Pressione \'Enter\' para sair.')
+
 if __name__ == '__main__':
     main()
+
+
+''' 
+TO DO:
+    IMPLEMENTAR TRY EXCEPT
+    IMPLEMENTAR DATA NO OUTPUT FILE
+'''
