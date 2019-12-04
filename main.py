@@ -65,7 +65,7 @@ def ask_where_are_xml_files() -> Tuple[str]:
     return xml_files_path
 
 
-def ask_dictory_to_save_output_files() -> Type(Path):
+def ask_dictory_to_save_output_files() -> Type[Path]:
     print('Escolha um local para salvar os aquivos de produtos (TXT): ')
     output_files_directory = Path(filedialog.askdirectory(
         title='Escolha um diretorio para salvar'))
@@ -154,7 +154,7 @@ def reset_lists() -> None:
 
 
 def say_good_bye_to_user() -> None:
-        print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
+    print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
     input(lineBreak + 'Pressione \'Enter\' para sair.')
 
 if __name__ == '__main__':
@@ -165,4 +165,5 @@ if __name__ == '__main__':
 TO DO:
     IMPLEMENTAR TRY EXCEPT
     IMPLEMENTAR DATA NO OUTPUT FILE
+    CRIAR CLASSES ?
 '''
