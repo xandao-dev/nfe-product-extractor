@@ -14,10 +14,10 @@ Todos os pré-requisitos já vem com o python 3.7.
 
 1. Insira as **notas ficais eletrônicas de produto 4.0 (NF-e 4.0)** no formato **.XML**. 
 2. Escolha uma pasta para salvar os arquivos.
-1. Será salvo na pasta escolhida arquivos chamados **"Products0.txt, Products1.txt, Products2.txt ..."**
+1. Será salvo na pasta escolhida arquivos chamados **"Products1.txt, Products2.txt, Products3.txt ..."**
 1. Abra o **Emissor de NF-e gratuito do Sebrae** e selecione a sua empresa.
 1. Agora vá em **Sistema** e depois em **Importar Arquivos**, como na imagem a seguir.![](./assets/images/img1.jpg)
-1. Selecione no emissor a pasta que contém os aquivos **"Products0.txt, Products1.txt, Products2.txt ..."**
+1. Selecione no emissor a pasta que contém os aquivos **"Products1.txt, Products2.txt, Products3.txt ..."**
 1. Clique em **Importar**
 1. Pronto, os produtos foram importados! :clap::clap::clap:
 

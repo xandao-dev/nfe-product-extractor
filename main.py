@@ -42,41 +42,46 @@ def main():
     output_files_directory = Path(filedialog.askdirectory(
         title='Escolha um diretorio para salvar'))
 
-    product_index = 0
+    file_index = 1
     for xml_file in xml_files_path:
         output_files_path = output_files_directory / \
-            'Products{0}.txt'.format(product_index)
+            'Products{0}.txt'.format(file_index)
         outputFiles = open(output_files_path, 'w')
         tree = ET.parse(xml_file)
         rootET = tree.getroot()
-        nItems = iterate_over_xml(rootET)
-        making_sure_the_lists_is_not_empty(nItems)
-        formating_lists(nItems)
-        #generate_output_file_simple_mode(outputFiles, nItems)
-        generate_output_file_full_mode(outputFiles, nItems)
-        print_products(nItems)
+        n_products = count_products(rootET)
+        iterate_over_xml(rootET)
+        making_sure_the_lists_is_not_empty(n_products)
+        formating_lists(n_products)
+        #generate_output_file_simple_mode(outputFiles, n_products)
+        generate_output_file_full_mode(outputFiles, n_products)
+        print_products(n_products)
         reset_lists()
-        product_index += 1
+        file_index += 1
 
     print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
     outputFiles.close()
     input(lineBreak + 'Pressione \'Enter\' para sair.')
 
-#SEPARAR A FUNCAO
-def iterate_over_xml(rootET):
-    nItems = 0
+
+def count_products(rootET):
+    n_products = 0
     for product in rootET.iter('{0}prod'.format(portal)):
-        nItems += 1
+        n_products += 1
+    return n_products
+
+
+def iterate_over_xml(rootET):
+    for product in rootET.iter('{0}prod'.format(portal)):
         for product_element in list(product):
             for i in range(n_elements):
                 if product_element.tag == '{0}{1}'.format(portal, nfe_elements_names[i]):
                     if not product_element.text == None:
                         nfe_elements[i].append(product_element.text)
-    return nItems
 
 
-def making_sure_the_lists_is_not_empty(nItems):
-    for i in range(nItems):
+def making_sure_the_lists_is_not_empty(n_products):
+    for i in range(n_products):
         for j in range(n_elements):
             if not nfe_elements[j]:
                 nfe_elements[j].append('')
@@ -84,55 +89,55 @@ def making_sure_the_lists_is_not_empty(nItems):
                 nfe_elements[j].append('')
 
 
-def formating_lists(nItems):
+def formating_lists(n_products):
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
-    for nItem in range(nItems):
-        if not vUnCom[nItem] == '': 
-            vUnCom[nItem] = ("{0:.4f}".format(float(vUnCom[nItem])))
-        if not vUnTrib[nItem] == '':
-            vUnTrib[nItem] = ("{0:.4f}".format(float(vUnTrib[nItem])))
-        if cEAN[nItem] == 'SEM GTIN':
-            cEAN[nItem] = ''
-        if cEANTrib[nItem] == 'SEM GTIN':
-            cEANTrib[nItem] = ''
+    for n_product in range(n_products):
+        if not vUnCom[n_product] == '': 
+            vUnCom[n_product] = ("{0:.4f}".format(float(vUnCom[n_product])))
+        if not vUnTrib[n_product] == '':
+            vUnTrib[n_product] = ("{0:.4f}".format(float(vUnTrib[n_product])))
+        if cEAN[n_product] == 'SEM GTIN':
+            cEAN[n_product] = ''
+        if cEANTrib[n_product] == 'SEM GTIN':
+            cEANTrib[n_product] = ''
 
 
-def generate_output_file_simple_mode(outputFile, nItems):
+def generate_output_file_simple_mode(outputFile, n_products):
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
-    outputFile.write(produtoTAG + separator + str(nItems) + lineBreak)
-    for nItem in range(0, nItems):
+    outputFile.write(produtoTAG + separator + str(n_products) + lineBreak)
+    for n_product in range(n_products):
         outputFile.write(groupA + separator + version + lineBreak)
-        outputFile.write(groupI + separator + cProd[nItem] +
-                         separator + xProd[nItem] + separator2x +
-                         NCM[nItem] + separator3x + uCom[nItem] +
-                         separator + vUnCom[nItem] + separator2x + uTrib[nItem] +
-                         separator + vUnTrib[nItem] + separator + indTot[nItem] +
+        outputFile.write(groupI + separator + cProd[n_product] +
+                         separator + xProd[n_product] + separator2x +
+                         NCM[n_product] + separator3x + uCom[n_product] +
+                         separator + vUnCom[n_product] + separator2x + uTrib[n_product] +
+                         separator + vUnTrib[n_product] + separator + indTot[n_product] +
                          separator + lineBreak)
 
 
-def generate_output_file_full_mode(outputFile, nItems):
+def generate_output_file_full_mode(outputFile, n_products):
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
     # uTrib|vUnTrib|indTot|CEST
 
-    outputFile.write(produtoTAG + separator + str(nItems) + lineBreak)
-    for nItem in range(0, nItems):
+    outputFile.write(produtoTAG + separator + str(n_products) + lineBreak)
+    for n_product in range(n_products):
         outputFile.write(groupA + separator + version + lineBreak)
-        outputFile.write(groupI + separator + cProd[nItem] +
-                         separator + xProd[nItem] + separator + cEAN[nItem] +
-                         separator + NCM[nItem] + separator3x + uCom[nItem] +
-                         separator + vUnCom[nItem] + separator + cEANTrib[nItem] +
-                         separator + uTrib[nItem] + separator + vUnTrib[nItem] +
-                         separator + indTot[nItem] + separator + CEST[nItem] +
+        outputFile.write(groupI + separator + cProd[n_product] +
+                         separator + xProd[n_product] + separator + cEAN[n_product] +
+                         separator + NCM[n_product] + separator3x + uCom[n_product] +
+                         separator + vUnCom[n_product] + separator + cEANTrib[n_product] +
+                         separator + uTrib[n_product] + separator + vUnTrib[n_product] +
+                         separator + indTot[n_product] + separator + CEST[n_product] +
                          separator + lineBreak)
 
 
-def print_products(nItems):
+def print_products(n_products):
     i = 0
     print(lineBreak + 'Arquivo gerado com os seguintes produtos:')
-    for nItem in range(0, nItems):
+    for n_product in range(n_products):
         i += 1
-        print('Produto ' + str(i) + ': ' + str(xProd[nItem]))
+        print('Produto ' + str(i) + ': ' + str(xProd[n_product]))
 
 
 def reset_lists():
