@@ -66,7 +66,7 @@ def main():
 
 def count_products(rootET):
     n_products = 0
-    for product in rootET.iter('{0}prod'.format(portal)):
+    for _ in rootET.iter('{0}prod'.format(portal)):
         n_products += 1
     return n_products
 
