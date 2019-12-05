@@ -83,7 +83,8 @@ def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
     for product in root_element.iter('{0}prod'.format(portal)):
         for product_element in list(product):
             for i in range(n_elements):
-                if product_element.tag == '{0}{1}'.format(portal, nfe_elements_names[i]):
+                if product_element.tag == '{0}{1}'.format(
+                        portal, nfe_elements_names[i]):
                     if not product_element.text == None:
                         nfe_elements[i].append(product_element.text)
 
@@ -111,7 +112,8 @@ def formating_lists(n_products: int) -> None:
             cEANTrib[n_product] = ''
 
 
-def generate_output_file_simple_mode(output_file: TextIO, n_products: int) -> None:
+def generate_output_file_simple_mode(output_file: TextIO, 
+                                     n_products: int) -> None:
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
     output_file.write(produtoTAG + separator + str(n_products) + lineBreak)
     for n_product in range(n_products):
@@ -124,28 +126,28 @@ def generate_output_file_simple_mode(output_file: TextIO, n_products: int) -> No
                          separator + lineBreak)
 
 
-def generate_output_file_full_mode(output_file: TextIO, n_products: int) -> None:
+def generate_output_file_full_mode(output_file: TextIO, 
+                                   n_products: int) -> None:
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
     # uTrib|vUnTrib|indTot|CEST
 
     output_file.write(produtoTAG + separator + str(n_products) + lineBreak)
     for n_product in range(n_products):
         output_file.write(groupA + separator + version + lineBreak)
-        output_file.write(groupI + separator + cProd[n_product] +
-                         separator + xProd[n_product] + separator + cEAN[n_product] +
-                         separator + NCM[n_product] + separator3x + uCom[n_product] +
-                         separator + vUnCom[n_product] + separator + cEANTrib[n_product] +
-                         separator + uTrib[n_product] + separator + vUnTrib[n_product] +
-                         separator + indTot[n_product] + separator + CEST[n_product] +
-                         separator + lineBreak)
+        output_file.write(groupI + separator + cProd[n_product] + separator + 
+                          xProd[n_product] + separator + cEAN[n_product] +
+                          separator + NCM[n_product] + separator3x + 
+                          uCom[n_product] + separator + vUnCom[n_product] + 
+                          separator + cEANTrib[n_product] + separator + 
+                          uTrib[n_product] + separator + vUnTrib[n_product] +
+                          separator + indTot[n_product] + separator + 
+                          CEST[n_product] + separator + lineBreak)
 
 
 def print_products(n_products: int) -> None:
-    i = 0
     print(lineBreak + 'Arquivo gerado com os seguintes produtos:')
     for n_product in range(n_products):
-        i += 1
-        print('Produto ' + str(i) + ': ' + str(xProd[n_product]))
+        print('Produto ' + str(n_product + 1) + ': ' + str(xProd[n_product]))
 
 
 def reset_lists() -> None:
@@ -154,7 +156,7 @@ def reset_lists() -> None:
 
 
 def say_good_bye_to_user() -> None:
-    print(lineBreak + 'Caso identifique algum problema abra o arquivo txt e edite.')
+    print(lineBreak + 'Caso encontre problemas abra o arquivo txt e edite.')
     input(lineBreak + 'Pressione \'Enter\' para sair.')
 
 if __name__ == '__main__':
@@ -164,6 +166,6 @@ if __name__ == '__main__':
 ''' 
 TO DO:
     IMPLEMENTAR TRY EXCEPT
-    IMPLEMENTAR DATA NO OUTPUT FILE
+    IMPLEMENTAR DATA NO OUTPUT FILE / NOME DO ARQUIVO DE ENTRADA
     CRIAR CLASSES ?
 '''
