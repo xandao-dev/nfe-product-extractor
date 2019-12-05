@@ -1,5 +1,5 @@
-#__version__ = '1.1'
-#__author__ = 'Alexandre Calil Martins Fonseca'
+__version__ = '1.1'
+__author__ = 'Alexandre Calil Martins Fonseca'
 
 import xml.etree.ElementTree as ElementTree
 from typing import Type, List, TextIO, Tuple
@@ -26,13 +26,13 @@ cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd,  \
 nfe_elements: List[str] = [
     cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
     vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot,
-    ]
+]
 
 nfe_elements_names: List[str] = [
     'cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala',
     'CFOP', 'uCom', 'qCom', 'vUnCom', 'vProd', 'cEANTrib',
     'uTrib', 'qTrib', 'vUnTrib', 'indTot',
-    ]
+]
 
 
 def main():
@@ -88,7 +88,7 @@ def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
     for product in root_element.iter('{0}prod'.format(portal)):
         for product_element in list(product):
             for i in range(n_elements):
-                if product_element.tag is '{0}{1}'.format(
+                if product_element.tag == '{0}{1}'.format(
                         portal, nfe_elements_names[i]):
                     if product_element.text is not None:
                         nfe_elements[i].append(product_element.text)
@@ -107,13 +107,13 @@ def formating_lists(n_products: int) -> None:
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     for n_product in range(n_products):
-        if vUnCom[n_product] is not '':
+        if not vUnCom[n_product] == '':
             vUnCom[n_product] = ("{0:.4f}".format(float(vUnCom[n_product])))
-        if vUnTrib[n_product] is not '':
+        if not vUnTrib[n_product] == '':
             vUnTrib[n_product] = ("{0:.4f}".format(float(vUnTrib[n_product])))
-        if cEAN[n_product] is 'SEM GTIN':
+        if cEAN[n_product] == 'SEM GTIN':
             cEAN[n_product] = ''
-        if cEANTrib[n_product] is 'SEM GTIN':
+        if cEANTrib[n_product] == 'SEM GTIN':
             cEANTrib[n_product] = ''
 
 
