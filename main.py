@@ -1,5 +1,5 @@
-__version__ = '1.1'
-__author__ = 'Alexandre Calil Martins Fonseca'
+#__version__ = '1.1'
+#__author__ = 'Alexandre Calil Martins Fonseca'
 
 import xml.etree.ElementTree as ElementTree
 from typing import Type, List, TextIO, Tuple
@@ -97,9 +97,9 @@ def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
 def making_sure_the_lists_is_not_empty(n_products: int) -> None:
     for i in range(n_products):
         for j in range(n_elements):
-            if nfe_elements[j] is None:
+            if not nfe_elements[j]:
                 nfe_elements[j].append('')
-            if nfe_elements[j][i] is None:
+            if not nfe_elements[j][i]:
                 nfe_elements[j].append('')
 
 
@@ -167,7 +167,7 @@ def say_good_bye_to_user() -> None:
     input(lineBreak + 'Pressione \'Enter\' para sair.')
 
 
-if __name__ is '__main__':
+if __name__ == '__main__':
     main()
 
 
