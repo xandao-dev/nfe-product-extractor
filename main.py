@@ -20,14 +20,16 @@ n_elements: int = 16
 cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd,  \
 cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
 
-nfe_elements: List[str] = [cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP,
-                           uCom, qCom, vUnCom, vProd, cEANTrib, uTrib, 
-                           qTrib, vUnTrib, indTot]
+nfe_elements: List[str] = [
+    cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, 
+    vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot,
+]
 
-nfe_elements_names: List[str] = ['cProd', 'xProd', 'cEAN', 'NCM', 'CEST',   \
-                                 'indEscala', 'CFOP', 'uCom', 'qCom',       \
-                                 'vUnCom','vProd', 'cEANTrib', 'uTrib',     \
-                                 'qTrib','vUnTrib', 'indTot']
+nfe_elements_names: List[str] = [
+    'cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala', 
+    'CFOP', 'uCom', 'qCom', 'vUnCom','vProd', 'cEANTrib', 
+    'uTrib', 'qTrib','vUnTrib', 'indTot',
+]
 
 
 def main():
