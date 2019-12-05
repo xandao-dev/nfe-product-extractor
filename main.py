@@ -1,3 +1,6 @@
+__version__ = '1.1'
+__author__ = 'Alexandre Calil Martins Fonseca'
+
 import xml.etree.ElementTree as ElementTree
 from typing import Type, List, TextIO, Tuple
 from pathlib import Path
