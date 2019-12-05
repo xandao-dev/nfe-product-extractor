@@ -18,18 +18,18 @@ n_elements: int = 16
 
 # LISTS
 cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd,  \
-cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
+    cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
 
 nfe_elements: List[str] = [
-    cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, 
+    cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
     vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot,
-]
+    ]
 
 nfe_elements_names: List[str] = [
-    'cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala', 
-    'CFOP', 'uCom', 'qCom', 'vUnCom','vProd', 'cEANTrib', 
-    'uTrib', 'qTrib','vUnTrib', 'indTot',
-]
+    'cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala',
+    'CFOP', 'uCom', 'qCom', 'vUnCom', 'vProd', 'cEANTrib',
+    'uTrib', 'qTrib', 'vUnTrib', 'indTot',
+    ]
 
 
 def main():
@@ -85,18 +85,18 @@ def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
     for product in root_element.iter('{0}prod'.format(portal)):
         for product_element in list(product):
             for i in range(n_elements):
-                if product_element.tag == '{0}{1}'.format(
+                if product_element.tag is '{0}{1}'.format(
                         portal, nfe_elements_names[i]):
-                    if not product_element.text == None:
+                    if product_element.text is not None:
                         nfe_elements[i].append(product_element.text)
 
 
 def making_sure_the_lists_is_not_empty(n_products: int) -> None:
     for i in range(n_products):
         for j in range(n_elements):
-            if not nfe_elements[j]:
+            if nfe_elements[j] is None:
                 nfe_elements[j].append('')
-            if not nfe_elements[j][i]:
+            if nfe_elements[j][i] is None:
                 nfe_elements[j].append('')
 
 
@@ -104,31 +104,32 @@ def formating_lists(n_products: int) -> None:
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     for n_product in range(n_products):
-        if not vUnCom[n_product] == '': 
+        if vUnCom[n_product] is not '':
             vUnCom[n_product] = ("{0:.4f}".format(float(vUnCom[n_product])))
-        if not vUnTrib[n_product] == '':
+        if vUnTrib[n_product] is not '':
             vUnTrib[n_product] = ("{0:.4f}".format(float(vUnTrib[n_product])))
-        if cEAN[n_product] == 'SEM GTIN':
+        if cEAN[n_product] is 'SEM GTIN':
             cEAN[n_product] = ''
-        if cEANTrib[n_product] == 'SEM GTIN':
+        if cEANTrib[n_product] is 'SEM GTIN':
             cEANTrib[n_product] = ''
 
 
-def generate_output_file_simple_mode(output_file: TextIO, 
+def generate_output_file_simple_mode(output_file: TextIO,
                                      n_products: int) -> None:
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
     output_file.write(produtoTAG + separator + str(n_products) + lineBreak)
     for n_product in range(n_products):
         output_file.write(groupA + separator + version + lineBreak)
-        output_file.write(groupI + separator + cProd[n_product] +
-                         separator + xProd[n_product] + separator2x +
-                         NCM[n_product] + separator3x + uCom[n_product] +
-                         separator + vUnCom[n_product] + separator2x + uTrib[n_product] +
-                         separator + vUnTrib[n_product] + separator + indTot[n_product] +
-                         separator + lineBreak)
+        output_file.write(
+            groupI + separator + cProd[n_product] + separator +
+            xProd[n_product] + separator2x + NCM[n_product] +
+            separator3x + uCom[n_product] + separator +
+            vUnCom[n_product] + separator2x + uTrib[n_product] +
+            separator + vUnTrib[n_product] + separator +
+            indTot[n_product] + separator + lineBreak)
 
 
-def generate_output_file_full_mode(output_file: TextIO, 
+def generate_output_file_full_mode(output_file: TextIO,
                                    n_products: int) -> None:
     # I|cProd|xProd|cEAN|NCM|*opc*EXTIPI|*opc*genero|uCom|vUnCom|cEANTrib|
     # uTrib|vUnTrib|indTot|CEST
@@ -136,14 +137,15 @@ def generate_output_file_full_mode(output_file: TextIO,
     output_file.write(produtoTAG + separator + str(n_products) + lineBreak)
     for n_product in range(n_products):
         output_file.write(groupA + separator + version + lineBreak)
-        output_file.write(groupI + separator + cProd[n_product] + separator + 
-                          xProd[n_product] + separator + cEAN[n_product] +
-                          separator + NCM[n_product] + separator3x + 
-                          uCom[n_product] + separator + vUnCom[n_product] + 
-                          separator + cEANTrib[n_product] + separator + 
-                          uTrib[n_product] + separator + vUnTrib[n_product] +
-                          separator + indTot[n_product] + separator + 
-                          CEST[n_product] + separator + lineBreak)
+        output_file.write(
+            groupI + separator + cProd[n_product] + separator +
+            xProd[n_product] + separator + cEAN[n_product] +
+            separator + NCM[n_product] + separator3x +
+            uCom[n_product] + separator + vUnCom[n_product] +
+            separator + cEANTrib[n_product] + separator +
+            uTrib[n_product] + separator + vUnTrib[n_product] +
+            separator + indTot[n_product] + separator +
+            CEST[n_product] + separator + lineBreak)
 
 
 def print_products(n_products: int) -> None:
@@ -161,7 +163,8 @@ def say_good_bye_to_user() -> None:
     print(lineBreak + 'Caso encontre problemas abra o arquivo txt e edite.')
     input(lineBreak + 'Pressione \'Enter\' para sair.')
 
-if __name__ == '__main__':
+
+if __name__ is '__main__':
     main()
 
 
