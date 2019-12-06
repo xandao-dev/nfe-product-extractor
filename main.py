@@ -69,6 +69,9 @@ def ask_where_are_xml_files() -> Tuple[str]:
     xml_files_path = filedialog.askopenfilenames(
         title='Escolha as NF-e dos fornecedos',
         filetypes=[('XML document', ('.XML', '.xml')), ('all files', '.*')])
+    if xml_files_path == ():
+        print("Erro! Você não escolheu nenhuma NF-e.")
+        exit()
     return xml_files_path
 
 
@@ -198,6 +201,4 @@ if __name__ == '__main__':
 ''' 
 TO DO:
     IMPLEMENTAR TRY EXCEPT
-    IMPLEMENTAR DATA NO OUTPUT FILE / NOME DO ARQUIVO DE ENTRADA
-    CRIAR CLASSES ?
 '''
