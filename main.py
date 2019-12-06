@@ -51,8 +51,8 @@ def main():
         root_element = tree.getroot()
         n_products = count_products(root_element)
         iterate_over_xml(root_element)
-        making_sure_the_lists_is_not_empty(n_products)
-        formating_lists(n_products)
+        make_sure_the_lists_is_not_empty(n_products)
+        format_lists(n_products)
         #generate_output_file_simple_mode(output_file, n_products)
         generate_output_file_full_mode(output_file, n_products)
         print_products(n_products)
@@ -94,7 +94,7 @@ def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
                         nfe_elements[i].append(product_element.text)
 
 
-def making_sure_the_lists_is_not_empty(n_products: int) -> None:
+def make_sure_the_lists_is_not_empty(n_products: int) -> None:
     for i in range(n_products):
         for j in range(n_elements):
             if not nfe_elements[j]:
@@ -103,7 +103,7 @@ def making_sure_the_lists_is_not_empty(n_products: int) -> None:
                 nfe_elements[j].append('')
 
 
-def formating_lists(n_products: int) -> None:
+def format_lists(n_products: int) -> None:
     # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
     # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     for n_product in range(n_products):
