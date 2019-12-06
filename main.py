@@ -2,6 +2,7 @@ __version__ = '1.1'
 __author__ = 'Alexandre Calil Martins Fonseca'
 
 import xml.etree.ElementTree as ElementTree
+import os
 from typing import Type, List, TextIO, Tuple
 from pathlib import Path
 import tkinter
@@ -40,12 +41,15 @@ def main():
     root_window.withdraw()
 
     xml_files_path = ask_where_are_xml_files()
+    xml_filenames = get_filenames_from_paths(xml_files_path)
     output_files_directory = ask_dictory_to_save_output_files()
 
-    file_index = 1
+    file_index = 0
     for xml_file in xml_files_path:
+        #output_files_path = output_files_directory / \
+        #    'Products{0}.txt'.format(file_index)
         output_files_path = output_files_directory / \
-            'Products{0}.txt'.format(file_index)
+            'Products:{0}.txt'.format(xml_filenames[file_index])
         output_file = open(output_files_path, 'w')
         tree = ElementTree.parse(xml_file)
         root_element = tree.getroot()
@@ -68,6 +72,15 @@ def ask_where_are_xml_files() -> Tuple[str]:
         title='Escolha as NF-e dos fornecedos',
         filetypes=[('XML document', ('.XML', '.xml')), ('all files', '.*')])
     return xml_files_path
+
+
+def get_filenames_from_paths(paths: Tuple[str]) -> Tuple[str]:
+    filenames = []
+    for file_index in range(len(paths)):
+        parts_from_path = Path(paths[file_index]).parts
+        filename_and_extension = os.path.splitext(parts_from_path[-1])
+        filenames.append(filename_and_extension[0])
+    return filenames
 
 
 def ask_dictory_to_save_output_files() -> Type[Path]:
@@ -119,7 +132,7 @@ def format_lists(n_products: int) -> None:
 
 def generate_output_file_simple_mode(output_file: TextIO,
                                      n_products: int) -> None:
-    # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|  -> Minimo Funcional
+    # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|
     output_file.write(produtoTAG + separator + str(n_products) + lineBreak)
     for n_product in range(n_products):
         output_file.write(groupA + separator + version + lineBreak)
