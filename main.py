@@ -99,8 +99,12 @@ def generate_output_files_path(use_filename_name: bool,
 
 def ask_dictory_to_save_output_files() -> Type[Path]:
     print('Escolha um local para salvar os aquivos de produtos (TXT): ')
-    output_files_directory = Path(filedialog.askdirectory(
-        title='Escolha um diretorio para salvar'))
+    try:
+        output_files_directory = Path(filedialog.askdirectory(
+            title='Escolha um diretorio para salvar'))
+    except:
+        print("Erro!")
+        exit()
     return output_files_directory
 
 
@@ -196,9 +200,3 @@ def say_good_bye_to_user() -> None:
 
 if __name__ == '__main__':
     main()
-
-
-''' 
-TO DO:
-    IMPLEMENTAR TRY EXCEPT
-'''
