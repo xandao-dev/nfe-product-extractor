@@ -44,12 +44,11 @@ def main():
     xml_filenames = get_filenames_from_paths(xml_files_path)
     output_files_directory = ask_dictory_to_save_output_files()
 
-    file_index = 0
-    for xml_file in xml_files_path:
-        #output_files_path = output_files_directory / \
-        #    'Products{0}.txt'.format(file_index)
-        output_files_path = output_files_directory / \
-            'Products:{0}.txt'.format(xml_filenames[file_index])
+    for file_index, xml_file in enumerate(xml_files_path):
+        output_files_path = generate_output_files_path(True,
+                                                       output_files_directory,
+                                                       xml_filenames, 
+                                                       file_index)
         output_file = open(output_files_path, 'w')
         tree = ElementTree.parse(xml_file)
         root_element = tree.getroot()
@@ -61,7 +60,6 @@ def main():
         generate_output_file_full_mode(output_file, n_products)
         print_products(n_products)
         reset_lists()
-        file_index += 1
     output_file.close()
     say_good_bye_to_user()
 
@@ -81,6 +79,19 @@ def get_filenames_from_paths(paths: Tuple[str]) -> Tuple[str]:
         filename_and_extension = os.path.splitext(parts_from_path[-1])
         filenames.append(filename_and_extension[0])
     return filenames
+
+
+def generate_output_files_path(use_filename_name: bool,
+                               output_files_directory: Type[Path],
+                               xml_filenames: Tuple[str],
+                               file_index: int) -> Tuple[Type[Path]]:
+    if use_filename_name == True:
+        output_files_path = output_files_directory / \
+            'Products: {0}.txt'.format(xml_filenames[file_index])
+    else:
+        output_files_path = output_files_directory / \
+            'Products{0}.txt'.format(file_index)
+    return output_files_path
 
 
 def ask_dictory_to_save_output_files() -> Type[Path]:
