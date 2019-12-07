@@ -45,7 +45,7 @@ def main():
     output_files_directory = ask_dictory_to_save_output_files()
 
     for file_index, xml_file in enumerate(xml_files_path):
-        output_files_path = generate_output_files_path(True,
+        output_files_path = generate_output_files_path(False,
                                                        output_files_directory,
                                                        xml_filenames, 
                                                        file_index)
@@ -84,6 +84,7 @@ def get_filenames_from_paths(paths: Tuple[str]) -> Tuple[str]:
     return filenames
 
 
+#NAO ESTA FUNCIONANDO NO WINDOWS PELO NOME, ENTAO DEIXE FALSO
 def generate_output_files_path(use_filename_name: bool,
                                output_files_directory: Type[Path],
                                xml_filenames: Tuple[str],
