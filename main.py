@@ -3,6 +3,7 @@ __author__ = 'Alexandre Calil Martins Fonseca'
 
 import xml.etree.ElementTree as ElementTree
 import os
+import platform
 from typing import Type, List, TextIO, Tuple
 from pathlib import Path
 import tkinter
@@ -35,6 +36,8 @@ nfe_elements_names: List[str] = [
     'uTrib', 'qTrib', 'vUnTrib', 'indTot',
 ]
 
+#platform.system() return 'Windows', 'Linux' or 'Darwin' for Mac
+operating_system = platform.system()
 
 def main():
     root_window = tkinter.Tk()
@@ -45,7 +48,7 @@ def main():
     output_files_directory = ask_dictory_to_save_output_files()
 
     for file_index, xml_file in enumerate(xml_files_path):
-        output_files_path = generate_output_files_path(False,
+        output_files_path = generate_output_files_path(True,
                                                        output_files_directory,
                                                        xml_filenames, 
                                                        file_index)
@@ -84,12 +87,12 @@ def get_filenames_from_paths(paths: Tuple[str]) -> Tuple[str]:
     return filenames
 
 
-#NAO ESTA FUNCIONANDO NO WINDOWS PELO NOME, ENTAO DEIXE FALSO
 def generate_output_files_path(use_filename_name: bool,
                                output_files_directory: Type[Path],
                                xml_filenames: Tuple[str],
                                file_index: int) -> Tuple[Type[Path]]:
-    if use_filename_name == True:
+    if use_filename_name == True and operating_system != 'Windows':
+        #Only work on linux
         output_files_path = output_files_directory / \
             'Products: {0}.txt'.format(xml_filenames[file_index])
     else:
@@ -136,8 +139,6 @@ def make_sure_the_lists_is_not_empty(n_products: int) -> None:
 
 
 def format_lists(n_products: int) -> None:
-    # cEAN e cEANTrib -> Verificar se eh numero (SEM GTIN = "")
-    # vUnCom e vUnTrib -> max 4 decimais ex: 4.5000
     for n_product in range(n_products):
         if not vUnCom[n_product] == '':
             vUnCom[n_product] = ("{0:.4f}".format(float(vUnCom[n_product])))
@@ -152,6 +153,7 @@ def format_lists(n_products: int) -> None:
 def generate_output_file_simple_mode(output_file: TextIO,
                                      n_products: int) -> None:
     # I|cProd|xProd||NCM|||uCom|vUnCom||uTrib|vUnTrib|indTot|
+
     output_file.write(produtoTAG + separator + str(n_products) + lineBreak)
     for n_product in range(n_products):
         output_file.write(groupA + separator + version + lineBreak)
