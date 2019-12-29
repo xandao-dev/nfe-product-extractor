@@ -36,8 +36,9 @@ nfe_elements_names: List[str] = [
     'uTrib', 'qTrib', 'vUnTrib', 'indTot',
 ]
 
-#platform.system() return 'Windows', 'Linux' or 'Darwin' for Mac
+# platform.system() return 'Windows', 'Linux' or 'Darwin' for Mac
 operating_system = platform.system()
+
 
 def main():
     root_window = tkinter.Tk()
@@ -47,24 +48,29 @@ def main():
     xml_filenames = get_filenames_from_paths(xml_files_path)
     output_files_directory = ask_dictory_to_save_output_files()
 
-    for file_index, xml_file in enumerate(xml_files_path):
+    for file_index, xml_file_path in enumerate(xml_files_path):
         output_files_path = generate_output_files_path(True,
                                                        output_files_directory,
-                                                       xml_filenames, 
+                                                       xml_filenames,
                                                        file_index)
         output_file = open(output_files_path, 'w')
-        tree = ElementTree.parse(xml_file)
-        root_element = tree.getroot()
-        n_products = count_products(root_element)
-        iterate_over_xml(root_element)
-        make_sure_the_lists_is_not_empty(n_products)
-        format_lists(n_products)
-        #generate_output_file_simple_mode(output_file, n_products)
-        generate_output_file_full_mode(output_file, n_products)
-        print_products(n_products)
-        reset_lists()
+        process_file(xml_file_path, output_file)
+
     output_file.close()
     say_good_bye_to_user()
+
+
+def process_file(xml_file_path: str, output_file: TextIO) -> None:
+    tree = ElementTree.parse(xml_file_path)
+    root_element = tree.getroot()
+    n_products = count_products(root_element)
+    iterate_over_xml(root_element)
+    make_sure_the_lists_is_not_empty(n_products)
+    format_lists(n_products)
+    #generate_output_file_simple_mode(output_file, n_products)
+    generate_output_file_full_mode(output_file, n_products)
+    print_products(n_products)
+    reset_lists()
 
 
 def ask_where_are_xml_files() -> Tuple[str]:
@@ -92,7 +98,7 @@ def generate_output_files_path(use_filename_name: bool,
                                xml_filenames: Tuple[str],
                                file_index: int) -> Tuple[Type[Path]]:
     if use_filename_name == True and operating_system != 'Windows':
-        #Only work on linux
+        # Only work on linux
         output_files_path = output_files_directory / \
             'Products: {0}.txt'.format(xml_filenames[file_index])
     else:
