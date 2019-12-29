@@ -19,21 +19,21 @@ groupA: str = 'A'
 version: str = '1.02'
 groupI: str = 'I'
 portal: str = '{http://www.portalfiscal.inf.br/nfe}'
-n_elements: int = 16
 
 # LISTS
-cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd,  \
-    cEANTrib, uTrib, qTrib, vUnTrib, indTot = ([] for i in range(n_elements))
-
-nfe_elements: List[str] = [
-    cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
-    vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot,
-]
-
 nfe_elements_names: List[str] = [
     'cProd', 'xProd', 'cEAN', 'NCM', 'CEST', 'indEscala',
     'CFOP', 'uCom', 'qCom', 'vUnCom', 'vProd', 'cEANTrib',
     'uTrib', 'qTrib', 'vUnTrib', 'indTot',
+]
+
+cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom, vUnCom, vProd,  \
+    cEANTrib, uTrib, qTrib, vUnTrib, indTot = (
+        [] for i in range(len(nfe_elements_names)))
+
+nfe_elements: List[str] = [
+    cProd, xProd, cEAN, NCM, CEST, indEscala, CFOP, uCom, qCom,
+    vUnCom, vProd, cEANTrib, uTrib, qTrib, vUnTrib, indTot,
 ]
 
 # platform.system() return 'Windows', 'Linux' or 'Darwin' for Mac
@@ -128,7 +128,7 @@ def count_products(root_element: Type[ElementTree.Element]) -> int:
 def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
     for product in root_element.iter('{0}prod'.format(portal)):
         for product_element in list(product):
-            for i in range(n_elements):
+            for i in range(len(nfe_elements_names)):
                 if product_element.tag == '{0}{1}'.format(
                         portal, nfe_elements_names[i]):
                     if product_element.text is not None:
@@ -137,7 +137,7 @@ def iterate_over_xml(root_element: Type[ElementTree.Element]) -> None:
 
 def make_sure_the_lists_is_not_empty(n_products: int) -> None:
     for i in range(n_products):
-        for j in range(n_elements):
+        for j in range(len(nfe_elements_names)):
             if not nfe_elements[j]:
                 nfe_elements[j].append('')
             if not nfe_elements[j][i]:
