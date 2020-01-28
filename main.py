@@ -140,7 +140,10 @@ def make_sure_the_lists_is_not_empty(n_products: int) -> None:
         for j in range(len(nfe_elements_names)):
             if not nfe_elements[j]:
                 nfe_elements[j].append('')
-            if not nfe_elements[j][i]:
+            try:
+                if not nfe_elements[j][i]:
+                    nfe_elements[j].append('')
+            except IndexError:
                 nfe_elements[j].append('')
 
 
