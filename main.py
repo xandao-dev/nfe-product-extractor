@@ -19,6 +19,17 @@ groupA: str = 'A'
 version: str = '1.02'
 groupI: str = 'I'
 portal: str = '{http://www.portalfiscal.inf.br/nfe}'
+class colors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 
 # LISTS
 nfe_elements_names: List[str] = [
@@ -49,26 +60,37 @@ def main():
     output_files_directory = ask_dir_to_save_output_files()
 
     for file_index, xml_file_path in enumerate(xml_files_path):
-        output_files_path = generate_output_files_path(True,
-                                                       output_files_directory,
-                                                       xml_filenames,
-                                                       file_index)
-        output_file = open(output_files_path, 'w')
-        process_file(xml_file_path, output_file)
+        try:
+            output_files_path = generate_output_files_path(True,
+                                                        output_files_directory,
+                                                        xml_filenames,
+                                                        file_index)
+            output_file = open(output_files_path, 'w', encoding='utf-8')
+            process_file(xml_file_path, output_file)
+        except Exception as e:
+            print(e)
+            print(f"\n{colors.FAIL}Erro no arquivo: {xml_file_path}{colors.ENDC}")
 
     output_file.close()
     say_good_bye_to_user()
 
 
 def process_file(xml_file_path: str, output_file: TextIO) -> None:
+    skip = False
     try:
         tree = ElementTree.parse(xml_file_path)
     except ElementTree.ParseError:
         try:
-            tree = ElementTree.parse(xml_file_path, parser=ElementTree.XMLParser(encoding='iso-8859-5'))
+            print(f"\n{colors.WARNING}Erro ao ler XML, tentando com uma codificação diferente...{colors.ENDC}")
+            tree = ElementTree.parse(xml_file_path, parser=ElementTree.XMLParser(encoding='iso-8859-1'))
         except ElementTree.ParseError:
-            print('Erro! Arquivo {0} não é um XML válido.'.format(xml_file_path))
-            exit()
+            print(f"{colors.FAIL}Erro! Arquivo {xml_file_path} não é um XML válido.{colors.ENDC}")
+            skip = True
+
+    if skip:
+        print(f"{colors.WARNING}Pulando o Arquivo {xml_file_path}.{colors.ENDC}")
+        return
+
     root_element = tree.getroot()
     n_products = count_products(root_element)
     iterate_over_xml(root_element)
@@ -80,13 +102,14 @@ def process_file(xml_file_path: str, output_file: TextIO) -> None:
     reset_lists()
 
 
+
 def ask_where_are_xml_files() -> Tuple[str]:
     print('Escolha as notas fiscais (XML) dos seus fornecedores: ')
     xml_files_path = filedialog.askopenfilenames(
         title='Escolha as NF-e dos fornecedos',
         filetypes=[('XML document', ('.XML', '.xml')), ('all files', '.*')])
     if xml_files_path == ():
-        print("Erro! Você não escolheu nenhuma NF-e.")
+        print(f"{colors.FAIL}Erro! Você não escolheu nenhuma NF-e.{colors.ENDC}")
         exit()
     return xml_files_path
 
@@ -115,12 +138,12 @@ def generate_output_files_path(use_filename_name: bool,
 
 
 def ask_dir_to_save_output_files() -> Type[Path]:
-    print('Escolha um local para salvar os aquivos de produtos (TXT): ')
+    print('Escolha um local para salvar os arquivos dos produtos (TXT): ')
     try:
         output_files_directory = Path(filedialog.askdirectory(
             title='Escolha um diretorio para salvar'))
     except:
-        print("Erro!")
+        print(f"\n{colors.FAIL}Erro, nao foi escolhido um diretorio para salvar os produtos!{colors.ENDC}")
         exit()
     return output_files_directory
 
@@ -213,8 +236,7 @@ def reset_lists() -> None:
 
 
 def say_good_bye_to_user() -> None:
-    print(lineBreak + 'Caso encontre problemas abra o arquivo txt e edite.')
-    input(lineBreak + 'Pressione \'Enter\' para sair.')
+    print(f"\n{colors.OKGREEN}Sucesso! Pressione \'Enter\' para sair.{colors.ENDC}")
 
 
 if __name__ == '__main__':
