@@ -46,7 +46,7 @@ def main():
 
     xml_files_path = ask_where_are_xml_files()
     xml_filenames = get_filenames_from_paths(xml_files_path)
-    output_files_directory = ask_dictory_to_save_output_files()
+    output_files_directory = ask_dir_to_save_output_files()
 
     for file_index, xml_file_path in enumerate(xml_files_path):
         output_files_path = generate_output_files_path(True,
@@ -61,7 +61,14 @@ def main():
 
 
 def process_file(xml_file_path: str, output_file: TextIO) -> None:
-    tree = ElementTree.parse(xml_file_path)
+    try:
+        tree = ElementTree.parse(xml_file_path)
+    except ElementTree.ParseError:
+        try:
+            tree = ElementTree.parse(xml_file_path, parser=ElementTree.XMLParser(encoding='iso-8859-5'))
+        except ElementTree.ParseError:
+            print('Erro! Arquivo {0} não é um XML válido.'.format(xml_file_path))
+            exit()
     root_element = tree.getroot()
     n_products = count_products(root_element)
     iterate_over_xml(root_element)
@@ -107,7 +114,7 @@ def generate_output_files_path(use_filename_name: bool,
     return output_files_path
 
 
-def ask_dictory_to_save_output_files() -> Type[Path]:
+def ask_dir_to_save_output_files() -> Type[Path]:
     print('Escolha um local para salvar os aquivos de produtos (TXT): ')
     try:
         output_files_directory = Path(filedialog.askdirectory(
