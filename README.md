@@ -1,6 +1,37 @@
-# NFeProductExtractor
+<br />
+<p align="center">
+  <h3 align="center">NF-e Product Extractor</h3>
 
-**NFeProductExtractor** é um extrator de produtos de notas fiscais eletrônicas 4.0, ele é utilizado para automatizar o cadastro de produtos no emissor de notas gratuito do Sebrae 4.01.
+  <p align="center">
+    Extrator de produtos de notas fiscais eletrônicas 4.0, utilizado para automatizar o cadastro de produtos no emissor de notas gratuito do Sebrae 4.01.
+    <br />
+	<br />
+    <a href="https://github.com/xandao6/nfe-product-extractor"><strong>Explore a documentação »</strong></a>
+    <br />
+    <a href="https://github.com/xandao6/nfe-product-extractor/issue">Reporte um Bug</a>
+    ·
+    <a href="https://github.com/xandao6/nfe-product-extractor/issues">Peça um Recurso</a>
+  </p>
+</p>
+
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Conteúdo</summary>
+  <ol>
+    <li><a href="#sobre-o-projeto">Sobre o Projeto</a></li>
+    <li><a href="#instalação">Instalação</a></li>
+    <li><a href="#uso">Uso</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contribuição">Contribuição</a></li>
+    <li><a href="#licença">Licença</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ol>
+</details>
+
+## Sobre o Projeto
+
+**NF-e Product Extractor** é um extrator de produtos de notas fiscais eletrônicas 4.0, ele é utilizado para automatizar o cadastro de produtos no emissor de notas gratuito do Sebrae 4.01.
 
 Ele feito para funcionar com o emissor do Sebrae 4.01, que utiliza o layout de NF-e 4.0, porém ele pode facilmente ser adaptado para outras versões.
 
@@ -21,11 +52,30 @@ Todos os pré-requisitos já vem com o python 3.7.
 1. Clique em **Importar**
 1. Pronto, os produtos foram importados! :clap::clap::clap:
 
-OBS.: Caso tenha algum erro na importação você pode entrar no arquivo .TXT gerado e editar. Você também deve contatar o desenvolvedor com um printscreen do erro para evitar problemas futuros.
+OBS.: Caso tenha algum erro na importação você pode entrar no arquivo .TXT gerado e editar. Você também pode contactar o desenvolvedor com um print screen do erro para evitar problemas futuros.
+
+## Roadmap
+
+Veja as [issues abertas](https://github.com/xandao6/nfe-product-extractor/issues) para uma lista de recursos propostos (e problemas conhecidos).
 
 ## Contribuição
 
-**Pull requests** são bem-vindos. Para grandes mudanças, abra **issue** para discutir o que você gostaria de modificar.
+Contribuições são o que fazem a comunidade de código aberto um lugar incrível para aprender, se inspirar e criar. Qualquer contribuição que você fizer será **muito apreciada**.
+
+1. Faça um fork do projeto
+2. Crie uma nova branch (`git checkout -b feature/AmazingFeature`)
+3. Commit suas alterações (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a Branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
 ## Licença
-[APACHE 2.0](https://github.com/xandao6/NFeProductExtractor/blob/master/LICENSE.md)
+
+Distribuído sob a licença MIT. Veja [LICENSE](./LICENSE.md) para mais informações.
+
+Software livre =)
+
+## Contato
+
+Alexandre Calil - [@xandao6](https://www.linkedin.com/in/xandao6/) - alexandrecalilmf@gmail.com
+
+Projeto: [https://github.com/xandao6/nfe-product-extractor](https://github.com/xandao6/nfe-product-extractor)
