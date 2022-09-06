@@ -6,11 +6,11 @@
     Extrator de produtos de notas fiscais eletrônicas 4.0, utilizado para automatizar o cadastro de produtos no emissor de notas gratuito do Sebrae 4.01.
     <br />
 	<br />
-    <a href="https://github.com/xandao6/nfe-product-extractor"><strong>Explore a documentação »</strong></a>
+    <a href="https://github.com/xandao-dev/nfe-product-extractor"><strong>Explore a documentação »</strong></a>
     <br />
-    <a href="https://github.com/xandao6/nfe-product-extractor/issue">Reporte um Bug</a>
+    <a href="https://github.com/xandao-dev/nfe-product-extractor/issue">Reporte um Bug</a>
     ·
-    <a href="https://github.com/xandao6/nfe-product-extractor/issues">Peça um Recurso</a>
+    <a href="https://github.com/xandao-dev/nfe-product-extractor/issues">Peça um Recurso</a>
   </p>
 </p>
 
@@ -56,7 +56,7 @@ OBS.: Caso tenha algum erro na importação você pode entrar no arquivo .TXT ge
 
 ## Roadmap
 
-Veja as [issues abertas](https://github.com/xandao6/nfe-product-extractor/issues) para uma lista de recursos propostos (e problemas conhecidos).
+Veja as [issues abertas](https://github.com/xandao-dev/nfe-product-extractor/issues) para uma lista de recursos propostos (e problemas conhecidos).
 
 ## Contribuição
 
@@ -76,6 +76,6 @@ Software livre =)
 
 ## Contato
 
-Alexandre Calil - [@xandao6](https://www.linkedin.com/in/xandao6/) - alexandrecalilmf@gmail.com
+Alexandre Calil - [Linkedin](https://www.linkedin.com/in/xandao-dev/) - [alexandre@xandao.dev](mailto:alexandre@xandao.dev)
 
-Projeto: [https://github.com/xandao6/nfe-product-extractor](https://github.com/xandao6/nfe-product-extractor)
+Projeto: [https://github.com/xandao-dev/nfe-product-extractor](https://github.com/xandao-dev/nfe-product-extractor)
